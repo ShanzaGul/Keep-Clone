@@ -1,0 +1,74 @@
+.btn-navbar{
+    background-color: #202124 !important;
+    border-color: #202124 !important;
+    border-radius: 50%;
+}
+
+.btn-navbar:hover{
+    background-color: rgb(59, 60, 65) !important;
+    border-color:rgb(59, 60, 65) !important;
+}
+
+.btn-navbar:focus{
+    box-shadow: 0px 0px 0px 0px #fff !important;
+}
+
+.font-color-light{
+    color:#e8eaed;
+}
+
+.navbar-keep{
+    text-decoration: none !important;
+    font-size: 23px;
+    padding-left: 15px;
+    font-family: 'Public Sans', sans-serif;;
+    padding-top: 5px;
+}
+
+a:hover{
+    text-decoration: none !important;
+    color: #e8eaed;
+}
+
+
+
+.form-control-search{
+    border:none;
+}
+
+.form-control-search:focus {
+    box-shadow: 0px 0px 0px 0px #fff !important;
+  }
+
+.btn-search{
+    background-color: #fff;
+    color: #505152;
+    border:1px solid #fff;
+
+}
+
+.btn-search:focus{
+    box-shadow: 0px 0px 0px 0px #fff !important;
+    background-color: #fff;
+    color: #505152;
+    border:1px solid #fff;
+}
+
+.btn-search:hover{
+    background-color: rgb(59, 60, 65) !important;
+    border-color:rgb(59, 60, 65) !important;
+    color: #fff;
+    border:1px solid #fff;
+}
+
+@media screen and (max-width: 992px) {
+    .navbar-keep{
+        text-decoration: none !important;
+        font-size: 17px;
+        font-family: 'Public Sans', sans-serif;
+        padding-left: 0px;
+        padding-bottom: 0px;
+        padding-right: 0px;
+        padding-top: 8px;
+    }
+  }

@@ -1,0 +1,17 @@
+.form-control:focus{
+    box-shadow : 0px 0px 0px 0px #fff !important;
+}
+
+.drop-item{
+   height: 40px;
+   width: 40px;
+   background-color: inherit;
+   padding:10px;
+   margin:0px;
+   border-radius: 50%;
+}
+
+.drop-item:hover{
+    background-color: rgb(59, 60, 65) !important;
+    border-color:rgb(59, 60, 65) !important;
+}
