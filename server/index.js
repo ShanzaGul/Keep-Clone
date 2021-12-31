@@ -12,7 +12,7 @@ app.use(cors());
 
 app.use('/notes' , notesRouter)
 
-const CONNECTION_URL = 'a uri will be here';
+const CONNECTION_URL = "";
 const PORT = process.env.PORT|| 5000;
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })

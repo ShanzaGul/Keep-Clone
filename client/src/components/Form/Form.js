@@ -4,6 +4,7 @@ import { Form, Button, Row, Col, Dropdown } from "react-bootstrap";
 import { AiOutlineBell } from "react-icons/ai";
 import { MdOutlineColorLens, MdLabelOutline } from "react-icons/md";
 import { BiImage, BiArchiveIn } from "react-icons/bi";
+import FileBase from 'react-file-base64'
 import "./Form.css";
 
 export const useOnOutsideClick = (handleOutsideClick) => {
@@ -28,11 +29,25 @@ export const useOnOutsideClick = (handleOutsideClick) => {
   return { innerBorderRef };
 };
 
-const useMountEffect = (fun) => useEffect(fun, []);
+
+const useMountEffect = (a) => useEffect(a, []);
+
+const backgroundColors = [
+  "#5c2b29",
+  "#614a19",
+  "#635d19",
+  "#345920",
+  "#16504b",
+  "#2d555e",
+  "#42275e",
+  "#5b2245",
+];
+
 
 function NoteForm({ currentMode, changeContactAppMode }) {
   const [open, setOpen] = useState(false);
   const { innerBorderRef } = useOnOutsideClick(() => setOpen(false));
+  const [imgFile, setUploading] = useState("");
 
   const [NoteData, setNoteData] = useState({
     title: "",
@@ -44,44 +59,31 @@ function NoteForm({ currentMode, changeContactAppMode }) {
     archive: false,
   });
 
-  const [value, setValue] = useState("#202124");
   const handleSubmit = (e) => {
     e.preventDefault()
   };
 
-  const handleSelect = (e) => {
-    console.log(e);
-    setValue(e);
-  };
+  
 
-  const backgroundColors = [
-    "#5c2b29",
-    "#614a19",
-    "#635d19",
-    "#345920",
-    "#16504b",
-    "#2d555e",
-    "#42275e",
-    "#5b2245",
-  ];
-  backgroundColors.map(() => {
-    console.log(value);
-  });
 
  const imageSelector = (e) =>{
-console.log(e.target)
+   if(e.target.files[0] !== 0){
+  setUploading(URL.createObjectURL(e.target.files[0]))
+   }
  }
 
  const handleImage = () =>{
-   document.getElementById('selectfile').click()
+   document.getElementById('selectfile').click();
  }
+
+
 
 
   
   return (
     <div>
       <Row>
-        <Col md={6} sm={12}>
+        <Col md={{ span: 7, offset: 2 }} sm={12}>
           <Form
             style={{
               border: "0.5px solid #e8eaed",
@@ -91,24 +93,27 @@ console.log(e.target)
             }}
             onSubmit={handleSubmit}
           >
+            {imgFile && <img src={imgFile} alt="The Note Uploaded by user" style={{height:"300px" , width:"100%"}}></img>}
             <Form.Group
               onClick={() => {
                 setOpen(true);
               }}
             >
               <Form.Control
-                type="email"
+                type="text"
                 placeholder={open ? "Title" : "Take a note"}
                 className="form-control-title"
+                value={NoteData.title}
                 style={{
                   color: "white",
                   fontSize: "16px",
                   fontWeight: "500px",
                   border: "none",
-                  backgroundColor: value,
+                  backgroundColor:NoteData.backgroundColor,
                   borderBottomLeftRadius: "0px",
                   borderBottomRightRadius: "0px",
                 }}
+                onChange={(e)=>{setNoteData({...NoteData, title:e.target.value })}}
               />
             </Form.Group>
             {open && (
@@ -117,21 +122,23 @@ console.log(e.target)
                   as="textarea"
                   placeholder="Take a note..."
                   className="form-control-text"
+                  value={NoteData.message}
                   style={{
                     color: "white",
                     fontSize: "14px",
                     fontWeight: "400px",
                     border: "none",
-                    backgroundColor: value,
+                    backgroundColor: NoteData.backgroundColor,
                     borderTopLeftRadius: "0px",
                     borderTopRightRadius: "0px",
                   }}
+                  onChange={(e)=>{setNoteData({...NoteData, message:e.target.value})}}
                 />
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Button className="btn-navbar">
                     <AiOutlineBell />
-                  </Button>
-                  <Dropdown onSelect={handleSelect}>
+                  </Button>                 
+                  <Dropdown onSelect={(e)=> setNoteData({...NoteData, backgroundColor:e})}>
                     <Dropdown.Toggle className="btn-navbar">
                       <MdOutlineColorLens />
                     </Dropdown.Toggle>
@@ -162,14 +169,49 @@ console.log(e.target)
                   </Dropdown>
                   <Button className="btn-navbar" onClick={handleImage}>
                     <BiImage />
-                    <input id="selectfile" type="file" onChange={()=>imageSelector} style={{display:"none"}}></input>
+                    <input id="selectfile" type="file" onChange={imageSelector} style={{display:"none"}}></input>
                   </Button>
-                  <Button className="btn-navbar">
+                  <Button className="btn-navbar" onClick={()=>{setNoteData(NoteData =>({...NoteData, archive: !NoteData.archive}) )}}>
                     <BiArchiveIn />
                   </Button>
                   <Button className="btn-navbar">
                     <MdLabelOutline />
                   </Button>
+
+                  <Dropdown >
+                    <Dropdown.Toggle className="btn-navbar">
+                      <MdLabelOutline />
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu
+                      style={{
+                        borderRadius: "10px 10px 10px 10px",
+                        border: "1px solid #6c757d",
+                      }}
+                      className="bg-clr-dark"
+                    >
+                      <label>Label Note</label>
+                      <input type="text" name="label"></input>
+                     {/* Here I have got to check if the label already exist or not if it does then dont show the create add button*/}
+                     <Button>+ Create </Button>
+                     {/*
+                      {backgroundColors.map((color) => {
+                        return (
+                          <Dropdown.Item eventKey={color} className="drop-item">
+                            <div
+                              style={{
+                                height: "20px",
+                                width: "20px",
+                                borderRadius: "50%",
+                                backgroundColor: color,
+                              }}
+                            ></div>
+                          </Dropdown.Item>
+                        );
+                      })}
+                    */}
+
+                    </Dropdown.Menu>
+                  </Dropdown>
                   <div
                     style={{
                       marginRight: "10px",
