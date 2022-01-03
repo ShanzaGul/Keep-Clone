@@ -1,6 +1,6 @@
 import React from 'react'
 import "./App.css";
-import {useEffect} from 'react'
+import {useEffect,useState} from 'react'
 import { Container, Row, Col} from "react-bootstrap";
 import Navbar from './components/Navbar/Navbar'
 import Tabs from './components/Tabs/Tabs'
@@ -11,18 +11,19 @@ import { getNotes } from './actions/notes'
 function App() {
 
   const dispatch = useDispatch();
+  const [currentId, setCurrentId] = useState(null);
 
   useEffect(() => {
     dispatch(getNotes())
   }, [dispatch])
 
   return (
-    <div className="App bg-clr-dark" style={{ height: '100%', position: 'absolute', left: '0px', width: '100%', overflow: 'hidden'}}>
+    <div className="App bg-clr-dark">
       <Container fluid>
         <Row className="whole-app">
           <Col>
                    <Navbar />
-                   <Tabs />
+                   <Tabs currentId={currentId} setCurrentId={setCurrentId} />
 
           </Col>
         </Row>

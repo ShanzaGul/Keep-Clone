@@ -15,3 +15,8 @@
     background-color: rgb(59, 60, 65) !important;
     border-color:rgb(59, 60, 65) !important;
 }
+
+.dropdown-toggle::after {
+   border:0px;
+   margin:0px;
+}

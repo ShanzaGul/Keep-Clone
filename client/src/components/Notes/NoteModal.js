@@ -1,38 +1,14 @@
-import React from "react";
+import React from 'react';
+
 import { useEffect, useRef, useState } from "react";
-import { Form, Button, Row, Col, Dropdown } from "react-bootstrap";
+import { Form, Button,Modal, Row, Col, Dropdown } from "react-bootstrap";
 import { AiOutlineBell } from "react-icons/ai";
 import { MdOutlineColorLens, MdLabelOutline } from "react-icons/md";
 import { BiImage, BiArchiveIn } from "react-icons/bi";
-import {useDispatch} from 'react-redux';
-import { createNote } from "../../actions/notes";
-
-import "./Form.css";
-
-export const useOnOutsideClick = (handleOutsideClick) => {
-  const innerBorderRef = useRef();
-
-  const onClick = (event) => {
-    if (
-      innerBorderRef.current &&
-      !innerBorderRef.current.contains(event.target)
-    ) {
-      handleOutsideClick();
-    }
-  };
-
-  useMountEffect(() => {
-    document.addEventListener("click", onClick, true);
-    return () => {
-      document.removeEventListener("click", onClick, true);
-    };
-  });
-
-  return { innerBorderRef };
-};
+import {useDispatch, useSelector} from 'react-redux';
+import { updateNote } from "../../actions/notes";
 
 
-const useMountEffect = (a) => useEffect(a);
 
 const backgroundColors = [
   "#5c2b29",
@@ -46,13 +22,12 @@ const backgroundColors = [
 ];
 
 
-function NoteForm({ currentMode, changeContactAppMode }) {
-  const [open, setOpen] = useState(false);
-  const { innerBorderRef } = useOnOutsideClick(() => setOpen(false));
+function NoteModal(props) {
   const [baseImage, setBaseImage] = useState("");
-
+  const note = useSelector((state) => (props.currentId ? state.notes.find((message) => message._id === props.currentId) : null));
   const dispatch = useDispatch()
 
+  
   const [NoteData, setNoteData] = useState({
     title: "",
     message: "",
@@ -63,17 +38,15 @@ function NoteForm({ currentMode, changeContactAppMode }) {
     archive: false,
   });
 
+  useEffect(() => {
+    if (note) {
+      setNoteData(note);
+    }
+  }, [note]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createNote(NoteData));
-    setNoteData({title: "",
-    message: "",
-    selectedFile: "",
-    creator: "",
-    label: [],
-    backgroundColor: "#202124",
-    archive: false,});
-    setOpen(false);
+    dispatch(updateNote(props.currentId, NoteData));
   };
 
   
@@ -107,32 +80,28 @@ function NoteForm({ currentMode, changeContactAppMode }) {
   });
 };
 
-
-
-
-  
-  return (
-    <div>
-      <Row>
-        <Col md={{ span: 7, offset: 1 }} sm={12}>
-          <Form
+    return (
+      <Modal
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        {...props}
+      >
+        <Modal.Body  style={{backgroundColor:"rgb(32, 33, 36)", padding:"0px"}} >
+        <Form
             style={{
               border: "0.5px solid #e8eaed",
               borderRadius: "5px",
               boxShadow:
                 "0, 1px, 2px, 0, rgb(0 0 0 / 60%), 0, 2px, 6px, 2px, rgb(0 0 0 / 30%)",
             }}
-            onSubmit={handleSubmit}
+            onSubmit={(e)=>{handleSubmit(e); props.onHide();}}
           >
-            {baseImage && <img src={baseImage} alt="The Note Uploaded by user" style={{height:"300px" , width:"100%"}}></img>}
-            <Form.Group
-              onClick={() => {
-                setOpen(true);
-              }}
-            >
+            {NoteData.selectedFile && <img src={NoteData.selectedFile} alt="The Note Uploaded by user" style={{height:"300px" , width:"100%"}}></img>}
+            <Form.Group>
               <Form.Control
                 type="text"
-                placeholder={open ? "Title" : "Take a note"}
+                placeholder="Title"
                 className="form-control-title"
                 value={NoteData.title}
                 style={{
@@ -147,8 +116,7 @@ function NoteForm({ currentMode, changeContactAppMode }) {
                 onChange={(e)=>{setNoteData({...NoteData, title:e.target.value })}}
               />
             </Form.Group>
-            {open && (
-              <Form.Group ref={innerBorderRef}>
+              <Form.Group>
                 <Form.Control
                   as="textarea"
                   placeholder="Take a note..."
@@ -247,16 +215,15 @@ function NoteForm({ currentMode, changeContactAppMode }) {
                       marginTop:"2px"
                     }}
                   >
-                    <Button variant="outline-light" size="sm" type="submit" onClick={()=>{}}>Save</Button>
+                    <Button variant="outline-light" size="sm" type="submit">Save</Button>
+                    <Button variant="outline-light" size="sm" onClick={props.onHide}>Close</Button>
                   </div>
                 </div>
               </Form.Group>
-            )}
-          </Form>
-        </Col>
-      </Row>
-    </div>
-  );
-}
+              </Form>
+        </Modal.Body>
+      </Modal>
+    );
+  }
 
-export default NoteForm;
+export default NoteModal;

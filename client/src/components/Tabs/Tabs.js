@@ -9,11 +9,11 @@ import './Tabs.css'
 import NoteForm from '../Form/Form'
 import Notes from '../Notes/Notes'
 
-function Tabs() {
+function Tabs({currentId, setCurrentId}) {
     return (
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
   <Row>
-    <Col sm={3}>
+    <Col sm={1} md={2} lg={2}>
       <Nav variant="pills" className="flex-column">
         <Nav.Item>
           <Nav.Link eventKey="first" className="tabs-nav-link">
@@ -42,10 +42,10 @@ function Tabs() {
       </Nav>
     </Col>
     <Col sm={9}>
-    <NoteForm />
+    <NoteForm currentId={currentId} setCurrentId={setCurrentId} />
       <Tab.Content>
         <Tab.Pane eventKey="first">
-        <Notes />
+        <Notes setCurrentId={setCurrentId} currentId={currentId}  />
         </Tab.Pane>
         <Tab.Pane eventKey="second">
           <h2>hiiiiiiiiiii</h2>

@@ -1,4 +1,6 @@
 import NoteMessage from "../models/notesMessage.js"
+import mongoose from 'mongoose'
+
 
 
 export const getNotes = async (req, res) => {
@@ -14,7 +16,7 @@ export const getNotes = async (req, res) => {
 
 export const createNote = async (req, res) => {
     const { title, message, selectedFile, creator, label, backgroundColor, archive } = req.body;
-
+    console.log("I am here")
     const newNoteMessage = new NoteMessage({ title, message, selectedFile, creator,label, backgroundColor, archive })
 
     try {
@@ -24,4 +26,17 @@ export const createNote = async (req, res) => {
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
+}
+
+export const updateNote = async (req, res) => {
+    const {id} = req.params;
+    const { title, message, selectedFile, creator, label, backgroundColor, archive } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+
+    const updatedNote = {  title, message, selectedFile, creator, label, backgroundColor, archive,_id: id  };
+
+    await NoteMessage.findByIdAndUpdate(id, updatedNote, { new: true });
+
+    res.json(updatedNote);
+  
 }
