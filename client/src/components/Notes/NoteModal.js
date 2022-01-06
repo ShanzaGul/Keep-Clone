@@ -122,13 +122,8 @@ function NoteModal(props) {
                   className="form-control-text"
                   value={NoteData.message}
                   style={{
-                    color: "white",
-                    fontSize: "14px",
-                    fontWeight: "400px",
-                    border: "none",
                     backgroundColor: NoteData.backgroundColor,
-                    borderTopLeftRadius: "0px",
-                    borderTopRightRadius: "0px",
+                    height:"200px"
                   }}
                   onChange={(e)=>{setNoteData({...NoteData, message:e.target.value})}}
                 />

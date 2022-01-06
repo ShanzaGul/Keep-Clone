@@ -113,6 +113,17 @@ function NoteForm({ currentMode, changeContactAppMode }) {
 };
 
 
+const handleTextArea = ()=>{
+  const text = document.getElementById("form-textarea");
+  text.addEventListener("keyup",(e)=>{
+    text.style.height = "60px";
+  let sHeight = e.target.scrollHeight;
+  text.style.height = `${sHeight}px`;
+  })
+}
+
+
+
 
 
   
@@ -155,20 +166,15 @@ function NoteForm({ currentMode, changeContactAppMode }) {
             {open && (
               <Form.Group ref={innerBorderRef}>
                 <Form.Control
+                  id="form-textarea"
                   as="textarea"
                   placeholder="Take a note..."
                   className="form-control-text"
                   value={NoteData.message}
                   style={{
-                    color: "white",
-                    fontSize: "14px",
-                    fontWeight: "400px",
-                    border: "none",
                     backgroundColor: NoteData.backgroundColor,
-                    borderTopLeftRadius: "0px",
-                    borderTopRightRadius: "0px",
                   }}
-                  onChange={(e)=>{setNoteData({...NoteData, message:e.target.value})}}
+                  onChange={(e)=>{setNoteData({...NoteData, message:e.target.value}); handleTextArea();}}
                   required
                 />
                 <div style={{ display: "flex", flexDirection: "row" }}>
