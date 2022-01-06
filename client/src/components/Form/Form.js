@@ -118,7 +118,7 @@ function NoteForm({ currentMode, changeContactAppMode }) {
   
   return (
     <div>
-      <Row style={{paddingBottom:"15px"}}>
+      <Row style={{paddingBottom:"15px", paddingTop:"15px"}}>
         <Col md={{ span: 7, offset: 3 }} sm={12}>
           <Form
             style={{

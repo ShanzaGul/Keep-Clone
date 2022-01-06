@@ -1,3 +1,7 @@
+.navbar-img{
+    height: 39px !important;
+    width: auto !important;
+}
 .btn-navbar{
     background-color: #202124 !important;
     border-color: #202124 !important;
@@ -90,6 +94,23 @@ a:hover{
         padding-bottom: 0px;
         padding-right: 0px;
         padding-top: 8px;
+    }
+}
+
+@media screen and ( max-width: 281px){
+    .navbar-keep{
+        text-decoration: none !important;
+        font-size: 13px;
+        font-family: 'Public Sans', sans-serif;
+        padding-left: 0px;
+        padding-bottom: 0px;
+        padding-right: 0px;
+        padding-top: 8px;
+    }
+
+    .navbar-img{
+        height: 32px !important;
+        width: auto !important;
     }
 }
     
