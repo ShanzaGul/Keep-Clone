@@ -1,58 +1,63 @@
 import React from "react";
-import { Row, Col, Button, InputGroup, FormControl } from "react-bootstrap";
+import { Row, Col, Button, InputGroup, FormControl} from "react-bootstrap";
 import logo from "../../images/keep.png";
 
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoRefreshSharp } from "react-icons/io5";
-import { BsList } from "react-icons/bs";
 import { BsGrid } from "react-icons/bs";
-import { HiViewList } from "react-icons/hi";
+import { FaGripLines } from "react-icons/fa";
 
 import "./Navbar.css";
 
-export default function Navbar() {
+export default function Navbarr({listView, setListView}) {
+  
+
   return (
-  <Row className="pt-2 pb-2" >
-      <Col md={2} style={{ display: "flex" }}>
-        <img
-          src={logo}
-          alt="this logo"
-          style={{ height: "80%", width: "auto" }}
-        ></img>
-        <a
-          href="#home"
-          className="font-color-light navbar-keep"
-        >
-          Keep
-        </a>
-      </Col>
-
-      <Col md={6}>
-          <InputGroup className='navbar-input'>
-          <Button className="btn-search"><AiOutlineSearch /></Button>
-            <FormControl placeholder="Search" className="form-control-search" />
-          </InputGroup>
-      </Col>
-      <Col
-        md={3}
-        style={{ display: "flex", flexDirection: "row-reverse" }}
+    <Row className="pt-2 pb-2" >
+    <Col  style={{ padding:"0px"}}>
+      <div style={{ display: "flex"}}>
+      <img
+        src={logo}
+        alt="this logo"
+        style={{ height: "80%", width: "auto" }}
+      ></img>
+      <a
+        href="#home"
+        className="font-color-light navbar-keep"
       >
-        <Button className="btn-navbar font-color-light">
-          <BsGrid size="24" />
-        </Button>
-        <Button className="btn-navbar font-color-light">
-          <HiViewList size="24" />
-        </Button>
-        <Button className="btn-navbar font-color-light">
-          <IoRefreshSharp size="24" />
-        </Button>
-      </Col>
+        Keep
+      </a>
+      </div>
+    </Col>
 
-      <Col md={1} style={{ display: "flex", flexDirection: "row-reverse" }}>
+    <Col xs={5} lg={6} style={{padding:"0px"}}>
+        <InputGroup className='navbar-input'>
+        <Button className="btn-search"><AiOutlineSearch /></Button>
+          <FormControl placeholder="Search" className="form-control-search" />
+        </InputGroup>
+    </Col>
+    <Col
+      md={3}
+      style={{ display: "flex", flexDirection: "row-reverse" }}
+      className="btnchangelayout"
+    >
+      {listView &&
+         <Button className="btn-navbar font-color-light" onClick={()=>{setListView(listView=>!listView)}}>
+         <BsGrid size="24" />
+       </Button> }
+    
+      {!listView && <Button className="btn-navbar font-color-light" onClick={()=>{setListView(listView=>!listView)}}>
+        <FaGripLines  size="24" />
+      </Button>}
       <Button className="btn-navbar font-color-light">
-          <IoRefreshSharp size="24" />
-        </Button>
-       </Col>
-    </Row>
+        <IoRefreshSharp size="24" />
+      </Button>
+    </Col>
+    <Col style={{ display: "flex", flexDirection: "row-reverse" }}>
+    <Button className="btn-navbar font-color-light">
+       Name
+      </Button>
+     </Col>
+  </Row>
   );
 }

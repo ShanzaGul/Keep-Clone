@@ -48,7 +48,7 @@ const backgroundColors = [
 
 function NoteForm({ currentMode, changeContactAppMode }) {
   const [open, setOpen] = useState(false);
-  const { innerBorderRef } = useOnOutsideClick(() => setOpen(false));
+  const { innerBorderRef } = useOnOutsideClick(() => {setOpen(false); clear();});
   const [baseImage, setBaseImage] = useState("");
 
   const dispatch = useDispatch()
@@ -66,6 +66,10 @@ function NoteForm({ currentMode, changeContactAppMode }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createNote(NoteData));
+    clear();
+  };
+
+  const clear = () => {
     setNoteData({title: "",
     message: "",
     selectedFile: "",
@@ -73,8 +77,9 @@ function NoteForm({ currentMode, changeContactAppMode }) {
     label: [],
     backgroundColor: "#202124",
     archive: false,});
+    setBaseImage("");
     setOpen(false);
-  };
+  }
 
   
 
@@ -113,8 +118,8 @@ function NoteForm({ currentMode, changeContactAppMode }) {
   
   return (
     <div>
-      <Row>
-        <Col md={{ span: 7, offset: 1 }} sm={12}>
+      <Row style={{paddingBottom:"15px"}}>
+        <Col md={{ span: 7, offset: 3 }} sm={12}>
           <Form
             style={{
               border: "0.5px solid #e8eaed",
@@ -164,6 +169,7 @@ function NoteForm({ currentMode, changeContactAppMode }) {
                     borderTopRightRadius: "0px",
                   }}
                   onChange={(e)=>{setNoteData({...NoteData, message:e.target.value})}}
+                  required
                 />
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Button className="btn-navbar">

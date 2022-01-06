@@ -11,3 +11,19 @@
     color:white !important;
 }
 
+.tabs-nav-layout{
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+
+@media screen and (max-width: 766px) {
+    .tabs-nav-layout{
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center;
+    }
+    .tabs-nav-op{
+        display: none !important;
+    }
+  }

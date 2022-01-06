@@ -1,9 +1,6 @@
 textarea.form-control {
-    resize:none;
-    height: 60px;
-    max-height: 400px;
+   
 }
 
 textarea::-webkit-scrollbar{
-    width: 2px;
 }

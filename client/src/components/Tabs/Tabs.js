@@ -6,52 +6,52 @@ import {BiArchiveIn} from 'react-icons/bi'
 
 import './Tabs.css'
 
-import NoteForm from '../Form/Form'
 import Notes from '../Notes/Notes'
 
-function Tabs({currentId, setCurrentId}) {
+function Tabs({currentId, setCurrentId,listView}) {
     return (
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
   <Row>
-    <Col sm={1} md={2} lg={2}>
-      <Nav variant="pills" className="flex-column">
+    <Col sm={12} md={2} lg={2}>
+      <Nav variant="pills" className="tabs-nav-layout" >
         <Nav.Item>
           <Nav.Link eventKey="first" className="tabs-nav-link">
               <AiOutlineBulb size="20"/>
-              <div style={{marginLeft:"15px"}}>Notes</div>
+              <div style={{marginLeft:"15px"}} className='tabs-nav-op'>Notes</div>
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="second" className="tabs-nav-link">
               <AiOutlineBell size="20" />
-              <div style={{marginLeft:"15px"}}>Reminders</div>
+              <div style={{marginLeft:"15px"}} className='tabs-nav-op'>Reminders</div>
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="third" className="tabs-nav-link">
               <FiEdit2 size="20" />
-              <div style={{marginLeft:"15px"}}>Edit Labels</div>
+              <div style={{marginLeft:"15px"}} className='tabs-nav-op'>Edit Labels</div>
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="fourth" className="tabs-nav-link">
               <BiArchiveIn size="20" />
-              <div style={{marginLeft:"15px"}}>Archive</div>
+              <div style={{marginLeft:"15px"}} className='tabs-nav-op'>Archive</div>
           </Nav.Link>
         </Nav.Item>
       </Nav>
     </Col>
-    <Col sm={9}>
-    <NoteForm currentId={currentId} setCurrentId={setCurrentId} />
+
+    <Col>
       <Tab.Content>
         <Tab.Pane eventKey="first">
-        <Notes setCurrentId={setCurrentId} currentId={currentId}  />
+        <Notes setCurrentId={setCurrentId} currentId={currentId} listView={listView} />
         </Tab.Pane>
         <Tab.Pane eventKey="second">
           <h2>hiiiiiiiiiii</h2>
         </Tab.Pane>
       </Tab.Content>
     </Col>
+    
   </Row>
 </Tab.Container>
     )

@@ -82,7 +82,6 @@ function NoteModal(props) {
 
     return (
       <Modal
-        size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
         {...props}

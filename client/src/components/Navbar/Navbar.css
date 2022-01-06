@@ -61,10 +61,10 @@ a:hover{
     border:1px solid #fff;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (min-width: 992px) {
     .navbar-keep{
         text-decoration: none !important;
-        font-size: 17px;
+        font-size: 18px;
         font-family: 'Public Sans', sans-serif;
         padding-left: 0px;
         padding-bottom: 0px;
@@ -72,3 +72,24 @@ a:hover{
         padding-top: 8px;
     }
   }
+
+
+
+@media screen and (max-width: 766px) {
+    .btnchangelayout{
+        display:none !important;
+    }
+  }
+
+@media screen and ( max-width: 420px){
+    .navbar-keep{
+        text-decoration: none !important;
+        font-size: 14px;
+        font-family: 'Public Sans', sans-serif;
+        padding-left: 0px;
+        padding-bottom: 0px;
+        padding-right: 0px;
+        padding-top: 8px;
+    }
+}
+    
