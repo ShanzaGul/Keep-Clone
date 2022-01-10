@@ -63,6 +63,7 @@ function Notes({ setCurrentId, currentId,listView }) {
         show={modalShow}
         onHide={() => setModalShow(false)}
         notes={notes}
+        setCurrentId={setCurrentId}
       />
     </div>
   );

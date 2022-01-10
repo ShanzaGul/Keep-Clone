@@ -17,8 +17,9 @@ function App() {
   const [listView , setListView] = useState(false);
 
   useEffect(() => {
-    dispatch(getNotes())
-  }, [dispatch])
+    dispatch(getNotes());
+    console.log("I am fired and id id changed" , currentId)
+  }, [dispatch, currentId])
 
   return (
     <div className="App bg-clr-dark">

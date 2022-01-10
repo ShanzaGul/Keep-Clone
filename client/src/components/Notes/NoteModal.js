@@ -6,7 +6,9 @@ import { AiOutlineBell } from "react-icons/ai";
 import { MdOutlineColorLens, MdLabelOutline } from "react-icons/md";
 import { BiImage, BiArchiveIn } from "react-icons/bi";
 import {useDispatch, useSelector} from 'react-redux';
-import { updateNote } from "../../actions/notes";
+import { updateNote, deleteNote} from "../../actions/notes";
+import {IoMdClose} from 'react-icons/io'
+import {MdDeleteOutline} from 'react-icons/md'
 
 
 
@@ -25,7 +27,10 @@ const backgroundColors = [
 function NoteModal(props) {
   const [baseImage, setBaseImage] = useState("");
   const note = useSelector((state) => (props.currentId ? state.notes.find((message) => message._id === props.currentId) : null));
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [label, setLabel] = useState("");
+
+  
 
   
   const [NoteData, setNoteData] = useState({
@@ -47,7 +52,14 @@ function NoteModal(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateNote(props.currentId, NoteData));
+    props.setCurrentId(null);
   };
+
+  const handleDelete = () => {
+    dispatch(deleteNote(NoteData._id));
+    props.setCurrentId(null);
+
+  }
 
   
 
@@ -85,6 +97,7 @@ function NoteModal(props) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
         {...props}
+        onExit={()=>{setLabel("")}}
       >
         <Modal.Body  style={{backgroundColor:"rgb(32, 33, 36)", padding:"0px"}} >
         <Form
@@ -96,8 +109,20 @@ function NoteModal(props) {
             }}
             onSubmit={(e)=>{handleSubmit(e); props.onHide();}}
           >
+             <div style={{ backgroundColor:NoteData.backgroundColor, display:"flex", justifyContent:"space-between"}} >
+               
+             <Button onClick={props.onHide} style={{backgroundColor:"transparent",border:"none", outline:"none"}}  >
+                        <IoMdClose />
+            </Button>
+            
+            <Button style={{backgroundColor:"transparent", border:"none", outline:"none"}} onClick={()=>{ props.onHide(); handleDelete() }} >
+                    <MdDeleteOutline  />                    
+                    </Button>
+             </div>
+
             {NoteData.selectedFile && <img src={NoteData.selectedFile} alt="The Note Uploaded by user" style={{height:"300px" , width:"100%"}}></img>}
             <Form.Group>
+              
               <Form.Control
                 type="text"
                 placeholder="Title"
@@ -123,7 +148,7 @@ function NoteModal(props) {
                   value={NoteData.message}
                   style={{
                     backgroundColor: NoteData.backgroundColor,
-                    height:"200px"
+                    height:"130px"
                   }}
                   onChange={(e)=>{setNoteData({...NoteData, message:e.target.value})}}
                 />
@@ -167,7 +192,6 @@ function NoteModal(props) {
                   <Button className="btn-navbar" onClick={()=>{setNoteData(NoteData =>({...NoteData, archive: !NoteData.archive}) )}}>
                     <BiArchiveIn />
                   </Button>
-
                   <Dropdown >
                     <Dropdown.Toggle className="btn-navbar">
                       <MdLabelOutline />
@@ -180,37 +204,23 @@ function NoteModal(props) {
                       className="bg-clr-dark"
                     >
                       <label>Label Note</label>
-                      <input type="text" name="label"></input>
+                      <input type="text" name="label" value={label} onChange={(e)=>{ setLabel(e.target.value);}}></input>
                      {/* Here I have got to check if the label already exist or not if it does then dont show the create add button*/}
-                     <Button>+ Create </Button>
-                     {/*
-                      {backgroundColors.map((color) => {
+                     <Button onClick={()=> { if(label.length !== 0) {NoteData.label.push(label); setLabel("")}}}>+ Create </Button>
+                     
+                      {NoteData.label.length && NoteData.label.map((lab) => {
                         return (
-                          <Dropdown.Item eventKey={color} className="drop-item">
-                            <div
-                              style={{
-                                height: "20px",
-                                width: "20px",
-                                borderRadius: "50%",
-                                backgroundColor: color,
-                              }}
-                            ></div>
+                          <Dropdown.Item eventKey={lab} style={{fontSize:"12px" , color:"white"}}>
+                           {lab}
                           </Dropdown.Item>
                         );
                       })}
-                    */}
+                   
 
                     </Dropdown.Menu>
                   </Dropdown>
-                  <div
-                    style={{
-                      marginRight: "10px",
-                      marginLeft: "auto",
-                      marginTop:"2px"
-                    }}
-                  >
-                    <Button variant="outline-light" size="sm" type="submit">Save</Button>
-                    <Button variant="outline-light" size="sm" onClick={props.onHide}>Close</Button>
+                  <div>
+                    <Button variant="outline-light" size="sm" type="submit" style={{fontSize:"12px", marginTop:"5px"}}>Save</Button>
                   </div>
                 </div>
               </Form.Group>
