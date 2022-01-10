@@ -12,7 +12,7 @@ app.use(cors());
 
 app.use('/notes' , notesRouter)
 
-const CONNECTION_URL = "mongodb+srv://shanza_gul:8GZQMkYkPfkZpvH@cluster0.54qid.mongodb.net/cluster0?retryWrites=true&w=majority";
+const CONNECTION_URL = "";
 const PORT = process.env.PORT|| 5000;
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
