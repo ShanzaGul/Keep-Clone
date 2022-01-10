@@ -3,12 +3,13 @@ import React from 'react';
 import { useEffect, useRef, useState } from "react";
 import { Form, Button,Modal, Row, Col, Dropdown } from "react-bootstrap";
 import { AiOutlineBell } from "react-icons/ai";
-import { MdOutlineColorLens, MdLabelOutline } from "react-icons/md";
+import { MdOutlineColorLens, MdLabelOutline  } from "react-icons/md";
 import { BiImage, BiArchiveIn } from "react-icons/bi";
 import {useDispatch, useSelector} from 'react-redux';
 import { updateNote, deleteNote} from "../../actions/notes";
-import {IoMdClose} from 'react-icons/io'
+import {IoMdClose, IoMdAdd} from 'react-icons/io'
 import {MdDeleteOutline} from 'react-icons/md'
+import {AiOutlineMinus} from 'react-icons/ai'
 
 
 
@@ -58,9 +59,12 @@ function NoteModal(props) {
   const handleDelete = () => {
     dispatch(deleteNote(NoteData._id));
     props.setCurrentId(null);
-
   }
 
+  const handleLabel = (lab) => {
+    const newLabelArray = NoteData.label.filter((value)=>{ return value !== lab });
+    setNoteData({...NoteData, label: newLabelArray });
+  }
   
 
 
@@ -202,16 +206,25 @@ function NoteModal(props) {
                         border: "1px solid #6c757d",
                       }}
                       className="bg-clr-dark"
-                    >
-                      <label>Label Note</label>
-                      <input type="text" name="label" value={label} onChange={(e)=>{ setLabel(e.target.value);}}></input>
+                    > 
+                    
+                      <div style={{display:"flex", flexDirection:"row"}}>           
+              <Form.Control type="text" placeholder="Add label" className="form-control-title" value={label} style={{
+                  color: "white",
+                  fontSize: "12px",
+                  fontWeight: "500px",
+                  backgroundColor: "inherit"
+                }}
+                onChange={(e)=>{ setLabel(e.target.value)}}
+              />
                      {/* Here I have got to check if the label already exist or not if it does then dont show the create add button*/}
-                     <Button onClick={()=> { if(label.length !== 0) {NoteData.label.push(label); setLabel("")}}}>+ Create </Button>
-                     
-                      {NoteData.label.length && NoteData.label.map((lab) => {
+                     <Button size="sm" className="btn-navbar" onClick={()=> { if(label.length !== 0) {NoteData.label.push(label); setLabel("")}}}> <IoMdAdd /></Button>
+                     </div>   
+                     {NoteData.label.length && NoteData.label.map((lab) => {
                         return (
-                          <Dropdown.Item eventKey={lab} style={{fontSize:"12px" , color:"white"}}>
-                           {lab}
+                          <Dropdown.Item eventKey={lab} style={{fontSize:"12px" , color:"white" , backgroundColor: "rgb(59, 60, 65)"}}>
+                          <Button size="sm" className="btn-navbar" style={{marginRight:"2px"}} onClick={()=>{handleLabel(lab)}}> <IoMdClose size="12" /></Button>
+                            {lab}
                           </Dropdown.Item>
                         );
                       })}

@@ -47,7 +47,11 @@ function Tabs({currentId, setCurrentId,listView}) {
         <Notes setCurrentId={setCurrentId} currentId={currentId} listView={listView} />
         </Tab.Pane>
         <Tab.Pane eventKey="second">
-          <h2>hiiiiiiiiiii</h2>
+        </Tab.Pane>
+        <Tab.Pane eventKey="third">
+        </Tab.Pane>
+        <Tab.Pane eventKey="fourth">
+        <Notes setCurrentId={setCurrentId} currentId={currentId} listView={listView} />
         </Tab.Pane>
       </Tab.Content>
     </Col>
