@@ -5,7 +5,7 @@ import { Row, Spinner,Col } from "react-bootstrap";
 import NoteModal from "./NoteModal";
 import StackGrid from 'react-stack-grid'
 
-function Notes({ setCurrentId, currentId,listView }) {
+function Notes({ setCurrentId, currentId,listView,tab }) {
   const notes = useSelector((state) => state.notes);
   console.log(notes, "bro I am here");
   const [modalShow, setModalShow] = useState(false);
@@ -16,10 +16,13 @@ function Notes({ setCurrentId, currentId,listView }) {
     setModalShow(true);
   };
 
+
   useEffect(() => {
     console.log("i changed")
   }, [listView])
 
+
+  
   return (
     <div>
       <Row style={{ marginTop: "40px" }}>
@@ -30,7 +33,8 @@ function Notes({ setCurrentId, currentId,listView }) {
           </Spinner>
         ) : (<> 
           {!listView ? <StackGrid columnWidth={220} gutterWidth={15} gutterHeight={15}>
-            {notes.map((note) => {
+            {notes.map((note) => { 
+              if(note.archive === false && tab === "first"){
               return (
                 <Note
                   setCurrentId={setCurrentId}
@@ -38,20 +42,41 @@ function Notes({ setCurrentId, currentId,listView }) {
                   key={note._id}
                   note={note}
                 />
-              );
+              );} else if(note.archive === true && tab === "fourth"){
+                return (
+                  <Note
+                    setCurrentId={setCurrentId}
+                    handleModal={handleModal}
+                    key={note._id}
+                    note={note}
+                  />
+                );}
+
             })} 
             </StackGrid>:  <>
             {notes.map((note) => {
-              return (
-                <div style={{marginBottom:"10px"}}>
-                <Note
-                  setCurrentId={setCurrentId}
-                  handleModal={handleModal}
-                  key={note._id}
-                  note={note}
-                />
-                </div>
-              );
+               if(note.archive === false && tab === "first"){
+                return (
+                  <div style={{marginBottom : "10px"}}>
+                  <Note
+                    setCurrentId={setCurrentId}
+                    handleModal={handleModal}
+                    key={note._id}
+                    note={note}
+                  />
+                  </div>
+                );} else if(note.archive === true && tab === "fourth"){
+                  return (
+                    <div style={{marginBottom : "10px"}}>
+                    <Note
+                      setCurrentId={setCurrentId}
+                      handleModal={handleModal}
+                      key={note._id}
+                      note={note}
+                    />
+                    </div>
+                  );}
+
             })}</> }
 
           </>)

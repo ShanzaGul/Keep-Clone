@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Tab, Row, Col,Nav} from 'react-bootstrap'
 import {AiOutlineBulb, AiOutlineBell} from 'react-icons/ai' 
 import {FiEdit2} from 'react-icons/fi'
@@ -8,9 +8,10 @@ import './Tabs.css'
 
 import Notes from '../Notes/Notes'
 
-function Tabs({currentId, setCurrentId,listView}) {
+function Tabs({currentId, setCurrentId,listView, setTab}) {
+  const [key, setKey] = useState('first');
     return (
-        <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+        <Tab.Container id="left-tabs-example" defaultActiveKey="first"  activeKey={key} onSelect={(k) => {setKey(k); setTab(k); console.log(key)}}>
   <Row>
     <Col sm={12} md={2} lg={2}>
       <Nav variant="pills" className="tabs-nav-layout" >
@@ -20,12 +21,14 @@ function Tabs({currentId, setCurrentId,listView}) {
               <div style={{marginLeft:"15px"}} className='tabs-nav-op'>Notes</div>
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
+
+        {/* <Nav.Item>
           <Nav.Link eventKey="second" className="tabs-nav-link">
               <AiOutlineBell size="20" />
               <div style={{marginLeft:"15px"}} className='tabs-nav-op'>Reminders</div>
           </Nav.Link>
-        </Nav.Item>
+        </Nav.Item> */}
+
         <Nav.Item>
           <Nav.Link eventKey="third" className="tabs-nav-link">
               <FiEdit2 size="20" />
@@ -44,14 +47,14 @@ function Tabs({currentId, setCurrentId,listView}) {
     <Col>
       <Tab.Content>
         <Tab.Pane eventKey="first">
-        <Notes setCurrentId={setCurrentId} currentId={currentId} listView={listView} />
+        <Notes setCurrentId={setCurrentId} currentId={currentId} listView={listView} tab="first" />
         </Tab.Pane>
         <Tab.Pane eventKey="second">
         </Tab.Pane>
         <Tab.Pane eventKey="third">
         </Tab.Pane>
         <Tab.Pane eventKey="fourth">
-        <Notes setCurrentId={setCurrentId} currentId={currentId} listView={listView} />
+        <Notes setCurrentId={setCurrentId} currentId={currentId} listView={listView} tab="fourth" />
         </Tab.Pane>
       </Tab.Content>
     </Col>

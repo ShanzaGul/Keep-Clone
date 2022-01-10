@@ -178,9 +178,9 @@ const handleTextArea = ()=>{
                   required
                 />
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <Button className="btn-navbar">
+                  {/* <Button className="btn-navbar">
                     <AiOutlineBell />
-                  </Button>                 
+                  </Button>                  */}
                   <Dropdown onSelect={(e)=> setNoteData({...NoteData, backgroundColor:e})}>
                     <Dropdown.Toggle className="btn-navbar">
                       <MdOutlineColorLens />

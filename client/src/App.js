@@ -15,11 +15,11 @@ function App() {
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
   const [listView , setListView] = useState(false);
-
+  const [tab, setTab] = useState("first");
   useEffect(() => {
     dispatch(getNotes());
     console.log("I am fired and id id changed" , currentId)
-  }, [dispatch, currentId])
+  }, [dispatch, currentId,tab])
 
   return (
     <div className="App bg-clr-dark">
@@ -28,7 +28,7 @@ function App() {
           <Col>
                    <Navbarr listView={listView} setListView={setListView} />
                    <NoteForm currentId={currentId} setCurrentId={setCurrentId} />
-                   <Tabs currentId={currentId} setCurrentId={setCurrentId} listView={listView} />
+                   <Tabs currentId={currentId} setCurrentId={setCurrentId} listView={listView} tab={tab} setTab={setTab} />
 
           </Col>
         </Row>
