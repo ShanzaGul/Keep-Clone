@@ -1,39 +1,24 @@
 import React from 'react'
 import "./App.css";
-import {useEffect,useState} from 'react'
-import { Container, Row, Col} from "react-bootstrap";
-import Tabs from './components/Tabs/Tabs'
-import NoteForm from './components/Form/Form'
-
-
-import {useDispatch} from 'react-redux'
-import { getNotes } from './actions/notes'
-import Navbarr from './components/Navbar/Navbar';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './components/Home/Home'
+import Auth from './components/Auth/Auth'
+import { Container} from "react-bootstrap"
 
 function App() {
 
-  const dispatch = useDispatch();
-  const [currentId, setCurrentId] = useState(null);
-  const [listView , setListView] = useState(false);
-  const [tab, setTab] = useState("first");
-  useEffect(() => {
-    dispatch(getNotes());
-    console.log("I am fired and id id changed" , currentId)
-  }, [dispatch, currentId,tab])
 
   return (
-    <div className="App bg-clr-dark">
+      <BrowserRouter>
+      <div className="App bg-clr-dark">
       <Container fluid style={{height:"100vh"}}>
-        <Row className="whole-app">
-          <Col>
-                   <Navbarr listView={listView} setListView={setListView} />
-                   <NoteForm currentId={currentId} setCurrentId={setCurrentId} />
-                   <Tabs currentId={currentId} setCurrentId={setCurrentId} listView={listView} tab={tab} setTab={setTab} />
-
-          </Col>
-        </Row>
+       <Routes>
+         <Route path="/" exact element={<Home />}></Route>
+         <Route path="/auth" element={<Auth />}></Route>
+       </Routes>
       </Container>
-    </div>
+      </div>
+      </BrowserRouter>
   );
 }
 

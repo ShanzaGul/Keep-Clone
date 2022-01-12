@@ -11,7 +11,7 @@ import Notes from '../Notes/Notes'
 function Tabs({currentId, setCurrentId,listView, setTab}) {
   const [key, setKey] = useState('first');
     return (
-        <Tab.Container id="left-tabs-example" defaultActiveKey="first"  activeKey={key} onSelect={(k) => {setKey(k); setTab(k); console.log(key)}}>
+        <Tab.Container id="left-tabs-example" defaultActiveKey="first"  activeKey={key} onSelect={(k) => {setKey(k); setTab(k); }}>
   <Row>
     <Col sm={12} md={2} lg={2}>
       <Nav variant="pills" className="tabs-nav-layout" >
@@ -52,6 +52,7 @@ function Tabs({currentId, setCurrentId,listView, setTab}) {
         <Tab.Pane eventKey="second">
         </Tab.Pane>
         <Tab.Pane eventKey="third">
+        <Notes setCurrentId={setCurrentId} currentId={currentId} listView={listView} tab="third" />
         </Tab.Pane>
         <Tab.Pane eventKey="fourth">
         <Notes setCurrentId={setCurrentId} currentId={currentId} listView={listView} tab="fourth" />

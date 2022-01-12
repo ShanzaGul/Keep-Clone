@@ -16,10 +16,8 @@ function Notes({ setCurrentId, currentId,listView,tab }) {
     setModalShow(true);
   };
 
+  
 
-  useEffect(() => {
-    console.log("i changed")
-  }, [listView])
 
 
   
@@ -33,7 +31,7 @@ function Notes({ setCurrentId, currentId,listView,tab }) {
           </Spinner>
         ) : (<> 
           {!listView ? <StackGrid columnWidth={220} gutterWidth={15} gutterHeight={15}>
-            {notes.map((note) => { 
+            {notes && notes.map((note) => { 
               if(note.archive === false && tab === "first"){
               return (
                 <Note
@@ -51,8 +49,9 @@ function Notes({ setCurrentId, currentId,listView,tab }) {
                     note={note}
                   />
                 );}
-
             })} 
+
+          
             </StackGrid>:  <>
             {notes.map((note) => {
                if(note.archive === false && tab === "first"){

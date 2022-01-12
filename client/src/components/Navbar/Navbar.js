@@ -1,6 +1,7 @@
 import React from "react";
-import { Row, Col, Button, InputGroup, FormControl } from "react-bootstrap";
+import { Row, Col, Button, InputGroup, FormControl , Image} from "react-bootstrap";
 import logo from "../../images/keep.png";
+import {Link} from 'react-router-dom'
 
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoRefreshSharp } from "react-icons/io5";
@@ -10,11 +11,17 @@ import { FaGripLines } from "react-icons/fa";
 import "./Navbar.css";
 
 export default function Navbarr({ listView, setListView }) {
+
+  const user = null ;
+
+  const logout = ()=>{
+
+  }
   return (
     <>
     <Row className="pt-3 pb-2" >
     <Col xs={3} md={2}>
-      <div style={{ display: "flex"}}>
+      <div style={{ display: "flex"}} >
       <img
         src={logo}
         alt="this logo"
@@ -27,6 +34,7 @@ export default function Navbarr({ listView, setListView }) {
         Keep
       </a>
       </div>
+   
     </Col>
 
     <Col xs={6} md={6} lg={6}>
@@ -53,9 +61,17 @@ export default function Navbarr({ listView, setListView }) {
       </Button>
     </Col>
     <Col xs={2} md={1}>
-    <Button style={{ backgroundColor: "rgb(59, 60, 65)",borderColor:"rgb(59, 60, 65)",borderRadius:"50%", fontSize:"16px"}}>
+    {user?.result ? (
+          <div>
+            <Image alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Image>
+            <Button style={{ backgroundColor: "rgb(59, 60, 65)",borderColor:"rgb(59, 60, 65)",borderRadius:"50%", fontSize:"16px"}}>
        N
       </Button>
+            <Button  onClick={logout}>Logout</Button>
+          </div>
+        ) : (
+          <Link  to="/auth" ><Button size="sm" >LogIn</Button></Link>
+        )}
      </Col>
   </Row></>
   );

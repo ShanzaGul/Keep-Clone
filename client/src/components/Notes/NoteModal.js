@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useEffect, useRef, useState } from "react";
-import { Form, Button,Modal, Row, Col, Dropdown } from "react-bootstrap";
+import { Form, Button,Modal, Row, Col, Dropdown, Badge } from "react-bootstrap";
 import { AiOutlineBell } from "react-icons/ai";
 import { MdOutlineColorLens, MdLabelOutline  } from "react-icons/md";
 import { BiImage, BiArchiveIn } from "react-icons/bi";
@@ -156,6 +156,18 @@ function NoteModal(props) {
                   }}
                   onChange={(e)=>{setNoteData({...NoteData, message:e.target.value})}}
                 />
+                 <Form.Group style={{
+                   display:"flex",
+                   flexWrap:"wrap",
+                  color: "white",
+                  backgroundColor:NoteData.backgroundColor
+                }}> 
+                {NoteData.label.length > 0 && NoteData.label.map((lab)=>
+                  <>
+                  <Badge pill bg="dark"  style={{marginLeft:"5px", marginBottom:"5px"}} >{lab}</Badge>
+                  </>
+                )}
+                </Form.Group>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   {/* <Button className="btn-navbar">
                     <AiOutlineBell />
