@@ -1,21 +1,35 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import { Row, Col, Button, InputGroup, FormControl , Image} from "react-bootstrap";
 import logo from "../../images/keep.png";
 import {Link} from 'react-router-dom'
-
+import {useDispatch} from 'react-redux'
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoRefreshSharp } from "react-icons/io5";
 import { BsGrid } from "react-icons/bs";
 import { FaGripLines } from "react-icons/fa";
+import {LOGOUT} from '../../constants/actionTypes'
+import {useNavigate , useLocation} from 'react-router-dom'
 
 import "./Navbar.css";
 
 export default function Navbarr({ listView, setListView }) {
 
-  const user = null ;
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile'))) ;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const token = user?.token;
+
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  
+  }, [location]);
 
   const logout = ()=>{
-
+    dispatch({type: LOGOUT});
+    navigate('/auth');
+    setUser(null);
   }
   return (
     <>
@@ -37,7 +51,7 @@ export default function Navbarr({ listView, setListView }) {
    
     </Col>
 
-    <Col xs={6} md={6} lg={6}>
+    <Col xs={6} md={5} lg={6}>
         <InputGroup className='navbar-input'>
         <Button className="btn-search"><AiOutlineSearch /></Button>
           <FormControl placeholder="Search" className="form-control-search" />
@@ -60,14 +74,15 @@ export default function Navbarr({ listView, setListView }) {
         <IoRefreshSharp size="18" />
       </Button>
     </Col>
-    <Col xs={2} md={1}>
+    <Col xs={2} md={3} lg={2}>
     {user?.result ? (
           <div>
-            <Image alt={user?.result.name} src={user?.result.imageUrl}>{user?.result.name.charAt(0)}</Image>
-            <Button style={{ backgroundColor: "rgb(59, 60, 65)",borderColor:"rgb(59, 60, 65)",borderRadius:"50%", fontSize:"16px"}}>
-       N
-      </Button>
-            <Button  onClick={logout}>Logout</Button>
+            <Image roundedCircle style={{height:"35px"}}	 alt={user?.result.name} src={user?.result.imageUrl}></Image>
+            {!user.result.imageUrl ?   <Button style={{ backgroundColor: "rgb(59, 60, 65)",borderColor:"rgb(59, 60, 65)",borderRadius:"50%", fontSize:"16px"}}>
+            {user?.result.name.charAt(0)}
+           </Button> : <></>  }
+          
+            <Button size="sm" onClick={logout}>Logout</Button>
           </div>
         ) : (
           <Link  to="/auth" ><Button size="sm" >LogIn</Button></Link>
