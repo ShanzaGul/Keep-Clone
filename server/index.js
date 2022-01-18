@@ -2,7 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import notesRouter from './routes/notes.js'
+import notesRoutes from './routes/notes.js'
+import userRoutes from './routes/users.js'
 import dotenv from 'dotenv'
 const app = express()
 
@@ -12,9 +13,9 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
 
-app.use('/notes' , notesRouter)
+app.use('/notes' , notesRoutes)
+app.use('/user', useRoutes)
 
-//const CONNECTION_URL = "mongodb+srv://shanza_gul:8GZQMkYkPfkZpvH@cluster0.54qid.mongodb.net/cluster0?retryWrites=true&w=majority";
 const PORT = process.env.PORT|| 5000;
 
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })

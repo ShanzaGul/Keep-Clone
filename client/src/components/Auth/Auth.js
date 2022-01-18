@@ -9,6 +9,8 @@ import img from '../../images/hero-bg-2x.jpg'
 import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai'
 import {FcGoogle} from 'react-icons/fc'
 import {AUTH} from "../../constants/actionTypes"
+import {signin,signup} from '../../actions/auth'
+
 
 
 
@@ -35,7 +37,9 @@ function Auth() {
     e.preventDefault();
 
     if (isSignup) {
+      dispatch(signup(form,navigate))
     } else {
+      dispatch(signin(form,navigate))
     }
   };
 
@@ -53,6 +57,8 @@ function Auth() {
   };
 
   const googleError = () => alert('Google Sign In was unsuccessful. Try again later');
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
 
   
@@ -72,29 +78,29 @@ function Auth() {
             <>
               <Form.Group className="mb-3">
                             <Form.Label >First Name</Form.Label>
-                            <Form.Control required name="firstName" type="text" placeholder="Enter First Name" />
+                            <Form.Control required name="firstName" type="text" placeholder="Enter First Name" onChange={handleChange} value={form.firstName}/>
                         </Form.Group>
               <Form.Group className="mb-3">
               <Form.Label >Last Name</Form.Label>
-                            <Form.Control required name="LastName" type="text" placeholder="Enter Last Name" />
+                            <Form.Control required name="LastName" type="text" placeholder="Enter Last Name"  onChange={handleChange} value={form.lastName} />
               </Form.Group>
             </>
             )}
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control required type="email" placeholder="Enter email"  />
+                            <Form.Control required type="email" placeholder="Enter email" onChange={handleChange} value={form.email} />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
                             {showPassword ? <AiOutlineEye onClick={handleShowPassword} style={{marginLeft:"7px"}}  />: <AiOutlineEyeInvisible onClick={handleShowPassword} style={{marginLeft:"7px"}}   /> }
-                            <Form.Control required type={showPassword ? 'text' : 'password'} placeholder="Password"  />
+                            <Form.Control required type={showPassword ? 'text' : 'password'} placeholder="Password"  onChange={handleChange} value={form.password} />
                         </Form.Group>
                         { isSignup &&  <>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             
                             <Form.Label>Repeat Password</Form.Label>
-                            <Form.Control required name="confirmPassword" type={showPassword ? 'text' : 'password'} placeholder="Password"/>
+                            <Form.Control required name="confirmPassword" type={showPassword ? 'text' : 'password'} placeholder="Password" onChange={handleChange} value={form.confirmPassword} />
                         </Form.Group> 
                         </> }
                         <div style={{display:"flex", flexDirection:"column"}}>
@@ -103,7 +109,7 @@ function Auth() {
                             </Button>
 
                             <GoogleLogin
-                                        clientId=""
+                                        clientId="122049905869-i2gmvj5jiv0ecqb07p103q0464u8n7hp.apps.googleusercontent.com"
                                         render={renderProps => (
                                         <Button style={{marginTop:"5px", color:"rgba(0,0,0,0.6)"}} variant="light" onClick={renderProps.onClick} disabled={renderProps.disabled}><FcGoogle />  { isSignup ? 'Sign Up' : 'Sign In' } with Google</Button>
                                         )}
