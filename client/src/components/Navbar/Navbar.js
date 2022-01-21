@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import { Row, Col, Button, InputGroup, FormControl , Image} from "react-bootstrap";
+import { Row, Col, Button, InputGroup, FormControl , Image, DropdownButton, Dropdown} from "react-bootstrap";
 import logo from "../../images/keep.png";
 import {Link} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
@@ -34,7 +34,8 @@ export default function Navbarr({ listView, setListView }) {
   return (
     <>
     <Row className="pt-3 pb-2" >
-    <Col xs={3} md={2}>
+
+    <Col xs={3} md={2} lg={2} >
       <div style={{ display: "flex"}} >
       <img
         src={logo}
@@ -51,15 +52,17 @@ export default function Navbarr({ listView, setListView }) {
    
     </Col>
 
-    <Col xs={6} md={5} lg={6}>
+    <Col xs={6} md={5} lg={6} >
         <InputGroup className='navbar-input'>
         <Button className="btn-search"><AiOutlineSearch /></Button>
           <FormControl placeholder="Search" className="form-control-search" />
         </InputGroup>
     </Col>
+
     <Col
+    lg={2}
       md={2}
-      style={{ display: "flex", flexDirection: "row-reverse" }}
+      style={{ display: "flex", flexDirection: "row-reverse"}}
       className="btnchangelayout"
     >
       {listView &&
@@ -74,20 +77,39 @@ export default function Navbarr({ listView, setListView }) {
         <IoRefreshSharp size="18" />
       </Button>
     </Col>
-    <Col xs={2} md={3} lg={2}>
+
+
+
+    <Col xs={2} md={3} lg={2} >
     {user?.result ? (
           <div>
-            <Image roundedCircle style={{height:"35px"}}	 alt={user?.result.name} src={user?.result.imageUrl}></Image>
-            {!user.result.imageUrl ?   <Button style={{ backgroundColor: "rgb(59, 60, 65)",borderColor:"rgb(59, 60, 65)",borderRadius:"50%", fontSize:"16px"}}>
-            {user?.result.name.charAt(0)}
-           </Button> : <></>  }
+            {!user.result.imageUrl ? 
+              <Dropdown size="sm"  align="end">
+              <Dropdown.Toggle  className="btn-navbar">
+                {user?.result.name.charAt(0)}
+              </Dropdown.Toggle>
+              <Dropdown.Menu variant="dark">
+                <Dropdown.Item href="#/action-1"> <Button size="sm" variant="light" onClick={logout}>Logout</Button></Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+              : <>
+               <Dropdown size="sm"  align="end" style={{width:"40px", height:"100%", padding:"0px"}}>
+              <Dropdown.Toggle variant="dark" style={{width:"auto", height:"100%", padding:"0px", borderRadius:"50%"}}>
+              <Image roundedCircle style={{height:"35px"}} src={user?.result.imageUrl}></Image>
+              </Dropdown.Toggle>
+              <Dropdown.Menu variant="dark">
+                <Dropdown.Item href="#/action-1"> <Button size="sm" variant="light" onClick={logout}>Logout</Button></Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+              </>  }
           
-            <Button size="sm" onClick={logout}>Logout</Button>
+           
           </div>
         ) : (
           <Link  to="/auth" ><Button size="sm" >LogIn</Button></Link>
         )}
      </Col>
+
   </Row></>
   );
 }

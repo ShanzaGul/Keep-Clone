@@ -13,7 +13,7 @@ try {
         req.userId = decodedData?.id ;
     }else {
         decodedData = jwt.decode(token);
-        req.userId = decodedData?.id ;
+        req.userId = decodedData?.sub ;
     }
 
     next();
@@ -21,3 +21,6 @@ try {
     console.log(error)
 }
 }
+
+
+export default auth;

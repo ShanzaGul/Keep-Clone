@@ -31,6 +31,8 @@ function NoteModal(props) {
   const dispatch = useDispatch();
   const [label, setLabel] = useState("");
 
+  const user = JSON.parse(localStorage.getItem('profile'));
+
   
 
   
@@ -52,7 +54,7 @@ function NoteModal(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateNote(props.currentId, NoteData));
+    dispatch(updateNote(props.currentId, { ...NoteData, name: user?.result?.name }));
     props.setCurrentId(null);
   };
 

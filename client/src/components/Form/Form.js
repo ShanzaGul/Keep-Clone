@@ -51,6 +51,9 @@ function NoteForm({ currentMode, changeContactAppMode }) {
   const { innerBorderRef } = useOnOutsideClick(() => {setOpen(false); clear();});
   const [baseImage, setBaseImage] = useState("");
 
+  const user = JSON.parse(localStorage.getItem('profile'));
+
+
   const dispatch = useDispatch()
 
   const [NoteData, setNoteData] = useState({
@@ -65,7 +68,7 @@ function NoteForm({ currentMode, changeContactAppMode }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createNote(NoteData));
+    dispatch(createNote(({ ...NoteData, name: user?.result?.name })));
     clear();
   };
 

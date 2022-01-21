@@ -14,7 +14,7 @@ app.use(cors());
 
 
 app.use('/notes' , notesRoutes)
-app.use('/user', useRoutes)
+app.use('/user', userRoutes)
 
 const PORT = process.env.PORT|| 5000;
 

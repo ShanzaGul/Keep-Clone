@@ -19,7 +19,7 @@ function Notes({ setCurrentId, currentId,listView,tab }) {
   
 
 
-
+console.log(notes.length)
   
   return (
     <div>

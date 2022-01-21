@@ -25,14 +25,14 @@ function Home() {
 
     return (
         <div>
-             <Row className="whole-app">
-          <Col>
+            
+          
                    <Navbarr listView={listView} setListView={setListView} />
                    <NoteForm currentId={currentId} setCurrentId={setCurrentId} />
                    <Tabs currentId={currentId} setCurrentId={setCurrentId} listView={listView} tab={tab} setTab={setTab} />
 
-          </Col>
-        </Row>
+          
+   
         </div>
     )
 }

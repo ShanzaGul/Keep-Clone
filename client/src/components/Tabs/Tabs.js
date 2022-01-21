@@ -44,7 +44,7 @@ function Tabs({currentId, setCurrentId,listView, setTab}) {
       </Nav>
     </Col>
 
-    <Col>
+    <Col >
       <Tab.Content>
         <Tab.Pane eventKey="first">
         <Notes setCurrentId={setCurrentId} currentId={currentId} listView={listView} tab="first" />

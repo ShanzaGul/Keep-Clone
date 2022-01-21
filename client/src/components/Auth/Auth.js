@@ -82,25 +82,25 @@ function Auth() {
                         </Form.Group>
               <Form.Group className="mb-3">
               <Form.Label >Last Name</Form.Label>
-                            <Form.Control required name="LastName" type="text" placeholder="Enter Last Name"  onChange={handleChange} value={form.lastName} />
+                            <Form.Control required name="lastName" type="text" placeholder="Enter Last Name"  onChange={handleChange} value={form.lastName} />
               </Form.Group>
             </>
             )}
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control required type="email" placeholder="Enter email" onChange={handleChange} value={form.email} />
+                            <Form.Control required name="email" type="email" placeholder="Enter email" onChange={handleChange} value={form.email} />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
                             {showPassword ? <AiOutlineEye onClick={handleShowPassword} style={{marginLeft:"7px"}}  />: <AiOutlineEyeInvisible onClick={handleShowPassword} style={{marginLeft:"7px"}}   /> }
-                            <Form.Control required type={showPassword ? 'text' : 'password'} placeholder="Password"  onChange={handleChange} value={form.password} />
+                            <Form.Control required type={showPassword ? 'text' : 'password'} placeholder="Password"  onChange={handleChange} value={form.password} name="password" />
                         </Form.Group>
                         { isSignup &&  <>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             
                             <Form.Label>Repeat Password</Form.Label>
-                            <Form.Control required name="confirmPassword" type={showPassword ? 'text' : 'password'} placeholder="Password" onChange={handleChange} value={form.confirmPassword} />
+                            <Form.Control required name="confirmPassword" type={showPassword ? 'text' : 'password'} placeholder="Password" onChange={handleChange} value={form.confirmPassword} name="confirmPassword" />
                         </Form.Group> 
                         </> }
                         <div style={{display:"flex", flexDirection:"column"}}>

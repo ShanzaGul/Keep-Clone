@@ -15,13 +15,14 @@ export const getNotes = async (req, res) => {
 
 
 export const createNote = async (req, res) => {
-    const { title, message, selectedFile, creator, label, backgroundColor, archive } = req.body;
-    console.log("I am here")
-    const newNoteMessage = new NoteMessage({ title, message, selectedFile, creator,label, backgroundColor, archive })
+
+    const note = req.body;
+
+    const newNoteMessage  = new NoteMessage({ ...note, creator: req.userId, createdAt: new Date().toISOString() })
 
     try {
         await newNoteMessage.save();
-
+        console.log("Note created")
         res.status(201).json(newNoteMessage );
     } catch (error) {
         res.status(409).json({ message: error.message });
