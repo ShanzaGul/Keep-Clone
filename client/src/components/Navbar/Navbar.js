@@ -9,6 +9,8 @@ import { BsGrid } from "react-icons/bs";
 import { FaGripLines } from "react-icons/fa";
 import {LOGOUT} from '../../constants/actionTypes'
 import {useNavigate , useLocation} from 'react-router-dom'
+import decode from 'jwt-decode';
+
 
 import "./Navbar.css";
 
@@ -21,6 +23,14 @@ export default function Navbarr({ listView, setListView }) {
 
   useEffect(() => {
     const token = user?.token;
+
+    if (token) {
+      const decodedToken = decode(token);
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) 
+      logout();
+    }
+
 
     setUser(JSON.parse(localStorage.getItem('profile')));
   
@@ -95,10 +105,13 @@ export default function Navbarr({ listView, setListView }) {
               : <>
                <Dropdown size="sm"  align="end" style={{width:"40px", height:"100%", padding:"0px"}}>
               <Dropdown.Toggle variant="dark" style={{width:"auto", height:"100%", padding:"0px", borderRadius:"50%"}}>
-              <Image roundedCircle style={{height:"35px"}} src={user?.result.imageUrl}></Image>
+              <Image roundedCircle style={{height:"35px"}} alt={user?.result.name} src={user?.result.imageUrl}></Image>
+
               </Dropdown.Toggle>
               <Dropdown.Menu variant="dark">
-                <Dropdown.Item href="#/action-1"> <Button size="sm" variant="light" onClick={logout}>Logout</Button></Dropdown.Item>
+                <Dropdown.Item style={{backgroundColor:"transparent", display:"flex", justifyContent:"center"}}> 
+                <Button size="sm" variant="light" onClick={logout}>Logout</Button>
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
               </>  }

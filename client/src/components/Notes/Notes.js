@@ -9,6 +9,8 @@ function Notes({ setCurrentId, currentId,listView,tab }) {
   const notes = useSelector((state) => state.notes);
   console.log(notes, "bro I am here");
   const [modalShow, setModalShow] = useState(false);
+  const user = JSON.parse(localStorage.getItem('profile'));
+
 
   
 
@@ -16,23 +18,29 @@ function Notes({ setCurrentId, currentId,listView,tab }) {
     setModalShow(true);
   };
 
-  
+
 
 
 console.log(notes.length)
-  
+
+ 
+
+
   return (
     <div>
       <Row style={{ marginTop: "40px" }}>
         <Col lg={listView ? {offset:2,span:7} : 12}>
-        {!notes.length ? (
-          <Spinner animation="border" role="status">
+          {!notes && <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          </Spinner>}
+        {notes && notes.length === 0 ? (
+          <div>
+            No notes to Show
+          </div>
         ) : (<> 
           {!listView ? <StackGrid columnWidth={220} gutterWidth={15} gutterHeight={15}>
             {notes && notes.map((note) => { 
-              if(note.archive === false && tab === "first"){
+              if(note.archive === false && tab === "first" && (user?.result?.googleId === note?.creator || user?.result?._id === note?.creator)){
               return (
                 <Note
                   setCurrentId={setCurrentId}
