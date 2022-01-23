@@ -242,8 +242,6 @@ function NoteModal(props) {
                           </Dropdown.Item>
                         );
                       })}
-                   
-
                     </Dropdown.Menu>
                   </Dropdown>
                   <div>

@@ -48,7 +48,7 @@ console.log(notes.length)
                   key={note._id}
                   note={note}
                 />
-              );} else if(note.archive === true && tab === "fourth"){
+              );} else if(note.archive === true && tab === "fourth" && (user?.result?.googleId === note?.creator || user?.result?._id === note?.creator)){
                 return (
                   <Note
                     setCurrentId={setCurrentId}
@@ -62,7 +62,7 @@ console.log(notes.length)
           
             </StackGrid>:  <>
             {notes.map((note) => {
-               if(note.archive === false && tab === "first"){
+               if(note.archive === false && tab === "first" && (user?.result?.googleId === note?.creator || user?.result?._id === note?.creator)){
                 return (
                   <div style={{marginBottom : "10px"}}>
                   <Note
@@ -72,7 +72,7 @@ console.log(notes.length)
                     note={note}
                   />
                   </div>
-                );} else if(note.archive === true && tab === "fourth"){
+                );} else if(note.archive === true && tab === "fourth" && (user?.result?.googleId === note?.creator || user?.result?._id === note?.creator)){
                   return (
                     <div style={{marginBottom : "10px"}}>
                     <Note

@@ -16,12 +16,14 @@ function Home() {
   const [currentId, setCurrentId] = useState(null);
   const [listView , setListView] = useState(false);
   const [tab, setTab] = useState("first");
+  const user = JSON.parse(localStorage.getItem('profile'));
 
   
   useEffect(() => {
     dispatch(getNotes());
     console.log("I am fired and id id changed" , currentId)
   }, [dispatch, currentId,tab])
+
 
     return (
         <div>

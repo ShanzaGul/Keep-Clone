@@ -99,7 +99,7 @@ export default function Navbarr({ listView, setListView }) {
                 {user?.result.name.charAt(0)}
               </Dropdown.Toggle>
               <Dropdown.Menu variant="dark">
-                <Dropdown.Item href="#/action-1"> <Button size="sm" variant="light" onClick={logout}>Logout</Button></Dropdown.Item>
+                <Dropdown.Item  style={{backgroundColor:"transparent", display:"flex", justifyContent:"center"}}> <Button size="sm" variant="light" onClick={logout}>Logout</Button></Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
               : <>
