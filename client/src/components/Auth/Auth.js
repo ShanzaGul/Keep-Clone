@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { useDispatch } from 'react-redux';
 import {useNavigate} from 'react-router-dom'
 import { Row, Col, Button, InputGroup, FormControl , Image, Form, Container, Card} from "react-bootstrap";
@@ -10,6 +10,8 @@ import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai'
 import {FcGoogle} from 'react-icons/fc'
 import {AUTH} from "../../constants/actionTypes"
 import {signin,signup} from '../../actions/auth'
+import { useSelector } from 'react-redux';
+
 
 
 
@@ -23,6 +25,8 @@ function Auth() {
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const error = useSelector((state) => state.errorMessage);
+  
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
@@ -61,6 +65,10 @@ function Auth() {
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
 
+  useEffect(() => {
+  console.log(error,"jbhjv")
+  }, [error,dispatch]);
+  
   
 
   
@@ -89,6 +97,7 @@ function Auth() {
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control required name="email" type="email" placeholder="Enter email" onChange={handleChange} value={form.email} />
+                             {error && error.message ? <div style={{color:"white"}}>{error.message}</div> : <></>}
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">

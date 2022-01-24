@@ -12,7 +12,7 @@ import Navbarr from '../Navbar/Navbar';
 
 
 function Home() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
   const [listView , setListView] = useState(false);
   const [tab, setTab] = useState("first");

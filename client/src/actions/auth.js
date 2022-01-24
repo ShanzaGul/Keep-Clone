@@ -1,4 +1,4 @@
-import {AUTH} from '../constants/actionTypes'
+import {AUTH, ERROR} from '../constants/actionTypes'
 import * as api from '../api/index.js'
 
 export const signin = (formData,navigate) => async (dispatch) => {
@@ -10,6 +10,7 @@ export const signin = (formData,navigate) => async (dispatch) => {
         navigate('/');
     } catch (error) {
         console.log(error)
+        dispatch({type:ERROR, error})
     }
   
 }
