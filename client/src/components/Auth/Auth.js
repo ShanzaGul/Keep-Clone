@@ -21,7 +21,22 @@ const initialState = { firstName: '', lastName: '', email: '', password: '', con
 
 function Auth() {
 
+  const [form, setForm] = useState(initialState);
+  const [isSignup, setIsSignup] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const error = useSelector((state) => state.errorMessage);
   
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleShowPassword = () => setShowPassword(!showPassword);
+
+  const switchMode = () => {
+    setForm(initialState);
+    setIsSignup((prevIsSignup) => !prevIsSignup);
+    setShowPassword(false);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
