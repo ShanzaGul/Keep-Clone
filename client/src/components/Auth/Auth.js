@@ -11,6 +11,9 @@ import {FcGoogle} from 'react-icons/fc'
 import {AUTH} from "../../constants/actionTypes"
 import {signin,signup} from '../../actions/auth'
 import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from "react-toastify";
+
+
 
 
 
@@ -25,7 +28,9 @@ function Auth() {
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const error = useSelector((state) => state.errorMessage);
+  //const error = useSelector((state) => state.errorMessage);
+  const [show, setShow] = useState(false);
+
   
 
   const [showPassword, setShowPassword] = useState(false);
@@ -39,7 +44,6 @@ function Auth() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (isSignup) {
       dispatch(signup(form,navigate))
     } else {
@@ -66,16 +70,29 @@ function Auth() {
 
 
   useEffect(() => {
-  console.log(error,"jbhjv")
-  }, [error,dispatch]);
+  //console.log(error,"jbhjv")
+  console.log(show)
+ 
+  }, [dispatch]);
   
   
 
   
     return (
-       <Container className="hero-image" fluid style={{height:"100vh", padding:"0px"}}>
+      <>
+             <Container className="hero-image"  fluid style={{height:"100vh", padding:"0px"}}>
            <Row className="" style={{padding:"0px"}}>
                <Col className="" style={{padding:"0px"}}>
+               <ToastContainer
+                      position="bottom-left"
+                      theme="colored"
+                      autoClose={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable={false}
+                      />
            <div className="hero-text">
            <Card className="text-left" style={{backgroundColor:"rgba(1,10,10,0.45)", padding:"4px"}}>
                 <Card.Header>                        { isSignup ? 'Sign Up' : 'Sign In' }</Card.Header>
@@ -97,7 +114,7 @@ function Auth() {
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control required name="email" type="email" placeholder="Enter email" onChange={handleChange} value={form.email} />
-                             {error && error.message ? <div style={{color:"white"}}>{error.message}</div> : <></>}
+                            <div style={{backgroundColor:"purple", display: show ? "block" : "none"}} >true</div>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -136,8 +153,9 @@ function Auth() {
                    </div>
            </Col>
            </Row>
-     
         </Container>
+        </>
+        
     )
 
 }

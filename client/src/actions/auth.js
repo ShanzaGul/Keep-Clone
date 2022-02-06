@@ -1,5 +1,6 @@
 import {AUTH, ERROR} from '../constants/actionTypes'
 import * as api from '../api/index.js'
+import {toast} from 'react-toastify'
 
 export const signin = (formData,navigate) => async (dispatch) => {
     try {
@@ -11,6 +12,8 @@ export const signin = (formData,navigate) => async (dispatch) => {
     } catch (error) {
         console.log(error)
         dispatch({type:ERROR, error})
+        
+       
     }
   
 }
