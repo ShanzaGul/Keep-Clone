@@ -13,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App bg-clr-dark">
-        <Container fluid style={{ height: "100vh", padding: "0px" }}>
+        <Container fluid style={{ height: "100vh" }}>
           <Routes>
             <Route
               path="/"

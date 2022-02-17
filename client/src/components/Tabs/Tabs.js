@@ -13,7 +13,7 @@ function Tabs({currentId, setCurrentId,listView, setTab}) {
     return (
         <Tab.Container id="left-tabs-example" defaultActiveKey="first"  activeKey={key} onSelect={(k) => {setKey(k); setTab(k); }}>
   <Row>
-    <Col sm={12} md={2} lg={2}>
+    <Col sm={12} md={2} lg={2} >
       <Nav variant="pills" className="tabs-nav-layout" >
         <Nav.Item>
           <Nav.Link eventKey="first" className="tabs-nav-link">
@@ -44,7 +44,7 @@ function Tabs({currentId, setCurrentId,listView, setTab}) {
       </Nav>
     </Col>
 
-    <Col >
+    <Col sm={12} md={10} lg={10}>
       <Tab.Content>
         <Tab.Pane eventKey="first">
         <Notes setCurrentId={setCurrentId} currentId={currentId} listView={listView} tab="first" />

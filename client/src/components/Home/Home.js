@@ -28,14 +28,9 @@ function Home() {
 
     return (
         <div>
-            
-          
                    <Navbarr listView={listView} setListView={setListView} />
                    <NoteForm currentId={currentId} setCurrentId={setCurrentId} />
                    <Tabs currentId={currentId} setCurrentId={setCurrentId} listView={listView} tab={tab} setTab={setTab} />
-
-          
-   
         </div>
     )
 }

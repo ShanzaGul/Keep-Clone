@@ -1,18 +1,21 @@
 import {ERROR} from '../constants/actionTypes'
 import {toast} from 'react-toastify'
-//notes is a reducer
+
+const customId = "backend-error";
+
 const errorReducer =  (state = {errorMessage:null}, action) => {
     switch (action.type) {
       case ERROR:
-        console.log("errrrror", action.error.message)
-        toast.error(action.error.message, {
-          position: "bottom-left",
-          autoClose: false,
+      
+        toast.error(action.error, {
+          position: "bottom-center",
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: false,
           draggable: false,
           progress: undefined,
+          autoClose:5000,
+          toastId: customId
           });
           return {...state, errorMessage:action.error};
       default:

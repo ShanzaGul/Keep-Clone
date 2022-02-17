@@ -8,9 +8,8 @@ export const signIn = async (req, res) => {
   
     try {
       const oldUser = await User.findOne({ email });
-  
-      if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
-  
+
+      if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });  
       const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
   
       if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });

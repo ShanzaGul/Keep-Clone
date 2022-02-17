@@ -1,17 +1,14 @@
 import React,{useState,useEffect} from 'react'
 import { useDispatch } from 'react-redux';
 import {useNavigate} from 'react-router-dom'
-import { Row, Col, Button, InputGroup, FormControl , Image, Form, Container, Card} from "react-bootstrap";
-import {Link} from 'react-router-dom';
+import { Row, Col, Button, Form, Container, Card} from "react-bootstrap";
 import {GoogleLogin} from 'react-google-login'
 import './Auth.css'
-import img from '../../images/hero-bg-2x.jpg'
 import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai'
 import {FcGoogle} from 'react-icons/fc'
 import {AUTH} from "../../constants/actionTypes"
 import {signin,signup} from '../../actions/auth'
-import { useSelector } from 'react-redux';
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, Flip, toast} from "react-toastify";
 
 
 
@@ -28,13 +25,13 @@ function Auth() {
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //const error = useSelector((state) => state.errorMessage);
-  const [show, setShow] = useState(false);
 
   
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
+  const customId = "frontend-error";
+
 
   const switchMode = () => {
     setForm(initialState);
@@ -45,7 +42,20 @@ function Auth() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isSignup) {
-      dispatch(signup(form,navigate))
+      if(form.password === form.confirmPassword){
+        dispatch(signup(form,navigate))
+      }else {
+        toast.error("Passwords do not match", {
+          position: "bottom-center",
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          autoClose:5000,
+          toastId: customId
+          });
+      }
     } else {
       dispatch(signin(form,navigate))
     }
@@ -60,7 +70,15 @@ function Auth() {
       navigate("/");
       
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong, Try again later", {
+        position: "bottom-center",
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        autoClose:5000,
+        });
     }
   };
 
@@ -70,8 +88,6 @@ function Auth() {
 
 
   useEffect(() => {
-  //console.log(error,"jbhjv")
-  console.log(show)
  
   }, [dispatch]);
   
@@ -83,16 +99,7 @@ function Auth() {
              <Container className="hero-image"  fluid style={{height:"100vh", padding:"0px"}}>
            <Row className="" style={{padding:"0px"}}>
                <Col className="" style={{padding:"0px"}}>
-               <ToastContainer
-                      position="bottom-left"
-                      theme="colored"
-                      autoClose={false}
-                      newestOnTop={false}
-                      closeOnClick
-                      rtl={false}
-                      pauseOnFocusLoss
-                      draggable={false}
-                      />
+             
            <div className="hero-text">
            <Card className="text-left" style={{backgroundColor:"rgba(1,10,10,0.45)", padding:"4px"}}>
                 <Card.Header>                        { isSignup ? 'Sign Up' : 'Sign In' }</Card.Header>
@@ -114,7 +121,6 @@ function Auth() {
                         <Form.Group className="mb-3">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control required name="email" type="email" placeholder="Enter email" onChange={handleChange} value={form.email} />
-                            <div style={{backgroundColor:"purple", display: show ? "block" : "none"}} >true</div>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -126,7 +132,7 @@ function Auth() {
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             
                             <Form.Label>Repeat Password</Form.Label>
-                            <Form.Control required name="confirmPassword" type={showPassword ? 'text' : 'password'} placeholder="Password" onChange={handleChange} value={form.confirmPassword} name="confirmPassword" />
+                            <Form.Control required type={showPassword ? 'text' : 'password'} placeholder="Password" onChange={handleChange} value={form.confirmPassword} name="confirmPassword" />
                         </Form.Group> 
                         </> }
                         <div style={{display:"flex", flexDirection:"column"}}>
@@ -148,9 +154,27 @@ function Auth() {
                         </Form>
                    
                 </Card.Body>
-                <Card.Footer style={{fontSize:"14px"}} onClick={switchMode}> { isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign Up" }</Card.Footer>
+                <Card.Footer style={{fontSize:"14px"}} onClick={switchMode}> 
+                { isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign Up" }
+                <div style={{marginTop:"40px"}}>
+                <ToastContainer
+                      position="bottom-center"
+                      theme="colored"
+                      newestOnTop={false}
+                      autoClose={5000}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable={false}
+                      transition={Flip}
+                      />
+                </div>
+
+                </Card.Footer>
                 </Card>
+                
                    </div>
+                   
            </Col>
            </Row>
         </Container>
