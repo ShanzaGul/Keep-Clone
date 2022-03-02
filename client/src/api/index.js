@@ -11,6 +11,7 @@ API.interceptors.request.use((req) => {
   });
 
 export const fetchNotes = () => API.get('/notes');
+export const fetchNotesBySearch = (searchQuery) => API.get(`/notes/search?searchQuery=${searchQuery.search || "none"}`)
 export const createNote = (newNote) => API.post('/notes', newNote);
 export const updateNote = (id,updatedNote)=> API.patch(`/notes/${id}`,updatedNote);
 export const deleteNote = (id)=> API.delete(`/notes/${id}`);

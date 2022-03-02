@@ -13,6 +13,22 @@ export const getNotes = async (req, res) => {
 }
 
 
+export const getNotesBySearch = async (req, res) => {
+    const {searchQuery} = req.query;
+
+    try {
+        const title = new RegExp(searchQuery, "i");
+        const notes = await NoteMessage.find({ $or: [ { title } ]})
+        
+        res.json({data : notes})
+
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+
+
 
 export const createNote = async (req, res) => {
 

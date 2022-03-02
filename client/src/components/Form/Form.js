@@ -1,10 +1,9 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Form, Button, Row, Col, Dropdown } from "react-bootstrap";
-import { AiOutlineBell } from "react-icons/ai";
 import { MdOutlineColorLens, MdLabelOutline } from "react-icons/md";
 import { BiImage, BiArchiveIn } from "react-icons/bi";
-import {useDispatch} from 'react-redux';
+import { useDispatch } from "react-redux";
 import { createNote } from "../../actions/notes";
 
 import "./Form.css";
@@ -31,7 +30,6 @@ export const useOnOutsideClick = (handleOutsideClick) => {
   return { innerBorderRef };
 };
 
-
 const useMountEffect = (a) => useEffect(a);
 
 const backgroundColors = [
@@ -45,16 +43,17 @@ const backgroundColors = [
   "#5b2245",
 ];
 
-
 function NoteForm({ currentMode, changeContactAppMode }) {
   const [open, setOpen] = useState(false);
-  const { innerBorderRef } = useOnOutsideClick(() => {setOpen(false); clear();});
+  const { innerBorderRef } = useOnOutsideClick(() => {
+    setOpen(false);
+    clear();
+  });
   const [baseImage, setBaseImage] = useState("");
 
-  const user = JSON.parse(localStorage.getItem('profile'));
+  const user = JSON.parse(localStorage.getItem("profile"));
 
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [NoteData, setNoteData] = useState({
     title: "",
@@ -68,71 +67,62 @@ function NoteForm({ currentMode, changeContactAppMode }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createNote(({ ...NoteData, name: user?.result?.name })));
+    dispatch(createNote({ ...NoteData, name: user?.result?.name }));
     clear();
   };
 
   const clear = () => {
-    setNoteData({title: "",
-    message: "",
-    selectedFile: "",
-    creator: "",
-    label: [],
-    backgroundColor: "#202124",
-    archive: false,});
+    setNoteData({
+      title: "",
+      message: "",
+      selectedFile: "",
+      creator: "",
+      label: [],
+      backgroundColor: "#202124",
+      archive: false,
+    });
     setBaseImage("");
     setOpen(false);
-  }
+  };
 
-  
+  const imageSelector = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
+    setBaseImage(base64);
+    setNoteData({ ...NoteData, selectedFile: base64 });
+  };
 
+  const handleImage = () => {
+    document.getElementById("selectfile").click();
+  };
 
- const imageSelector = async (e) =>{
-   const file = e.target.files[0];
-  const base64 = await convertBase64(file);
-  setBaseImage(base64);
-  setNoteData({...NoteData, selectedFile:base64})
- }
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
 
- 
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
 
- const handleImage = () =>{
-   document.getElementById('selectfile').click();
- }
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
 
- const convertBase64 = (file) => {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
+  const handleTextArea = () => {
+    const text = document.getElementById("form-textarea");
+    text.addEventListener("keyup", (e) => {
+      text.style.height = "60px";
+      let sHeight = e.target.scrollHeight;
+      text.style.height = `${sHeight}px`;
+    });
+  };
 
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-};
-
-
-const handleTextArea = ()=>{
-  const text = document.getElementById("form-textarea");
-  text.addEventListener("keyup",(e)=>{
-    text.style.height = "60px";
-  let sHeight = e.target.scrollHeight;
-  text.style.height = `${sHeight}px`;
-  })
-}
-
-
-
-
-
-  
   return (
     <div>
-      <Row style={{paddingBottom:"15px", paddingTop:"15px"}}>
+      <Row style={{ paddingBottom: "15px", paddingTop: "15px" }}>
         <Col md={{ span: 7, offset: 3 }} sm={12}>
           <Form
             style={{
@@ -143,7 +133,13 @@ const handleTextArea = ()=>{
             }}
             onSubmit={handleSubmit}
           >
-            {baseImage && <img src={baseImage} alt="The Note Uploaded by user" style={{height:"300px" , width:"100%"}}></img>}
+            {baseImage && (
+              <img
+                src={baseImage}
+                alt="The Note Uploaded by user"
+                style={{ height: "300px", width: "100%" }}
+              ></img>
+            )}
             <Form.Group
               onClick={() => {
                 setOpen(true);
@@ -159,11 +155,13 @@ const handleTextArea = ()=>{
                   fontSize: "16px",
                   fontWeight: "500px",
                   border: "none",
-                  backgroundColor:NoteData.backgroundColor,
+                  backgroundColor: NoteData.backgroundColor,
                   borderBottomLeftRadius: "0px",
                   borderBottomRightRadius: "0px",
                 }}
-                onChange={(e)=>{setNoteData({...NoteData, title:e.target.value })}}
+                onChange={(e) => {
+                  setNoteData({ ...NoteData, title: e.target.value });
+                }}
               />
             </Form.Group>
             {open && (
@@ -177,14 +175,21 @@ const handleTextArea = ()=>{
                   style={{
                     backgroundColor: NoteData.backgroundColor,
                   }}
-                  onChange={(e)=>{setNoteData({...NoteData, message:e.target.value}); handleTextArea();}}
+                  onChange={(e) => {
+                    setNoteData({ ...NoteData, message: e.target.value });
+                    handleTextArea();
+                  }}
                   required
                 />
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   {/* <Button className="btn-navbar">
                     <AiOutlineBell />
                   </Button>                  */}
-                  <Dropdown onSelect={(e)=> setNoteData({...NoteData, backgroundColor:e})}>
+                  <Dropdown
+                    onSelect={(e) =>
+                      setNoteData({ ...NoteData, backgroundColor: e })
+                    }
+                  >
                     <Dropdown.Toggle className="btn-navbar">
                       <MdOutlineColorLens />
                     </Dropdown.Toggle>
@@ -199,7 +204,11 @@ const handleTextArea = ()=>{
                     >
                       {backgroundColors.map((color) => {
                         return (
-                          <Dropdown.Item eventKey={color} className="drop-item" key={color}>
+                          <Dropdown.Item
+                            eventKey={color}
+                            className="drop-item"
+                            key={color}
+                          >
                             <div
                               style={{
                                 height: "20px",
@@ -214,14 +223,27 @@ const handleTextArea = ()=>{
                     </Dropdown.Menu>
                   </Dropdown>
                   <Button className="btn-navbar" onClick={handleImage}>
-                    <BiImage />        
-                    <input id="selectfile" type="file" onChange={imageSelector} style={{display:"none"}}></input>
+                    <BiImage />
+                    <input
+                      id="selectfile"
+                      type="file"
+                      onChange={imageSelector}
+                      style={{ display: "none" }}
+                    ></input>
                   </Button>
-                  <Button className="btn-navbar" onClick={()=>{setNoteData(NoteData =>({...NoteData, archive: !NoteData.archive}) )}}>
+                  <Button
+                    className="btn-navbar"
+                    onClick={() => {
+                      setNoteData((NoteData) => ({
+                        ...NoteData,
+                        archive: !NoteData.archive,
+                      }));
+                    }}
+                  >
                     <BiArchiveIn />
                   </Button>
 
-                  <Dropdown >
+                  <Dropdown>
                     <Dropdown.Toggle className="btn-navbar">
                       <MdLabelOutline />
                     </Dropdown.Toggle>
@@ -234,9 +256,9 @@ const handleTextArea = ()=>{
                     >
                       <label>Label Note</label>
                       <input type="text" name="label"></input>
-                     {/* Here I have got to check if the label already exist or not if it does then dont show the create add button*/}
-                     <Button>+ Create </Button>
-                     {/*
+                      {/* Here I have got to check if the label already exist or not if it does then dont show the create add button*/}
+                      <Button>+ Create </Button>
+                      {/*
                       {backgroundColors.map((color) => {
                         return (
                           <Dropdown.Item eventKey={color} className="drop-item">
@@ -252,17 +274,23 @@ const handleTextArea = ()=>{
                         );
                       })}
                     */}
-
                     </Dropdown.Menu>
                   </Dropdown>
                   <div
                     style={{
                       marginRight: "10px",
                       marginLeft: "auto",
-                      marginTop:"2px"
+                      marginTop: "2px",
                     }}
                   >
-                    <Button variant="outline-light" size="sm" type="submit" onClick={()=>{}}>Save</Button>
+                    <Button
+                      variant="outline-light"
+                      size="sm"
+                      type="submit"
+                      onClick={() => {}}
+                    >
+                      Save
+                    </Button>
                   </div>
                 </div>
               </Form.Group>
