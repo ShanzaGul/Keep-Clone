@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Note from "./Note/Note";
-import { Row, Spinner, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import NoteModal from "./NoteModal";
 import StackGrid from "react-stack-grid";
-import { ToastContainer, Flip, toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 
 
 function Notes({ setCurrentId, currentId, listView, tab }) {
   const notes = useSelector((state) => state.notes);
-  console.log(notes, "bro I am here");
   const [modalShow, setModalShow] = useState(false);
   const user = JSON.parse(localStorage.getItem("profile"));
 
@@ -17,7 +16,8 @@ function Notes({ setCurrentId, currentId, listView, tab }) {
     setModalShow(true);
   };
 
-  console.log(notes.length);
+
+
 
   return (
     <div>

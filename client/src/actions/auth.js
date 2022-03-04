@@ -9,6 +9,7 @@ export const signin = (formData,navigate) => async (dispatch) => {
          
         navigate('/');
     } catch (error) {
+        console.log(error,"auth")
         if(error.response){
             console.log(error.response.status)
             if(error.response.status === 400){
@@ -19,7 +20,6 @@ export const signin = (formData,navigate) => async (dispatch) => {
             else if(error.response.status === 500){
                 dispatch({type:ERROR, error: error.response.data.message})
             }
-
         }else {
             dispatch({type:ERROR, error: "Something went wrong, try again"})
         }        

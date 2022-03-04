@@ -185,7 +185,7 @@ function Auth() {
                       </Button>
 
                       <GoogleLogin
-                        clientId="122049905869-i2gmvj5jiv0ecqb07p103q0464u8n7hp.apps.googleusercontent.com"
+                        clientId=""
                         render={(renderProps) => (
                           <Button
                             style={{

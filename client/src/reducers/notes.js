@@ -1,10 +1,12 @@
-import { CREATE, UPDATE, FETCH_ALL, DELETE,} from "../constants/actionTypes";
+import { CREATE, UPDATE, FETCH_ALL, DELETE,FETCH_BY_SEARCH} from "../constants/actionTypes";
 
 //notes is a reducer
 const notes = (notes = [], action) => {
   switch (action.type) {
     case FETCH_ALL:
       return action.payload;
+    case FETCH_BY_SEARCH:
+        return action.payload;
     case CREATE:
       return [...notes, action.payload];
     case UPDATE:

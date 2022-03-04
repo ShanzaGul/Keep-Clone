@@ -32,21 +32,6 @@ function Tabs({ currentId, setCurrentId, listView, setTab }) {
               </Nav.Link>
             </Nav.Item>
 
-            {/* <Nav.Item>
-          <Nav.Link eventKey="second" className="tabs-nav-link">
-              <AiOutlineBell size="20" />
-              <div style={{marginLeft:"15px"}} className='tabs-nav-op'>Reminders</div>
-          </Nav.Link>
-        </Nav.Item> */}
-
-            <Nav.Item>
-              <Nav.Link eventKey="third" className="tabs-nav-link">
-                <FiEdit2 size="20" />
-                <div style={{ marginLeft: "15px" }} className="tabs-nav-op">
-                  Edit Labels
-                </div>
-              </Nav.Link>
-            </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="fourth" className="tabs-nav-link">
                 <BiArchiveIn size="20" />

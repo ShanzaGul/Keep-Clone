@@ -26,7 +26,7 @@ function Note({ handleModal, note, setCurrentId }) {
       )}
       <Card.Body>
         <Card.Title>{note.title}</Card.Title>
-        <Card.Text style={{ paddingBottom: "6px" }}>{note.message}</Card.Text>
+        <Card.Text style={{ paddingBottom: "6px" , whiteSpace: "pre-line"}}>{note.message}</Card.Text>
       </Card.Body>
     </Card>
   );

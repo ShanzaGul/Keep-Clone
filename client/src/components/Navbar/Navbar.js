@@ -12,18 +12,18 @@ import logo from "../../images/keep.png";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AiOutlineSearch } from "react-icons/ai";
-import { IoRefreshSharp } from "react-icons/io5";
 import { BsGrid } from "react-icons/bs";
 import { FaGripLines } from "react-icons/fa";
 import { LOGOUT } from "../../constants/actionTypes";
 import { useNavigate, useLocation } from "react-router-dom";
+import { getNotes } from "../../actions/notes";
+
 import decode from "jwt-decode";
-import { getNotesBySearch} from "../../actions/notes";
 
 
 import "./Navbar.css";
 
-export default function Navbarr({ listView, setListView, search,setSearch }) {
+export default function Navbarr({ listView, setListView, search,setSearch , searchPost , clear}) {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,7 +35,8 @@ export default function Navbarr({ listView, setListView, search,setSearch }) {
     if (token) {
       const decodedToken = decode(token);
 
-      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+      if (decodedToken.exp * 1000 < new Date().getTime())
+       logout();
     }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
@@ -51,19 +52,24 @@ export default function Navbarr({ listView, setListView, search,setSearch }) {
       <Row className="pt-3 pb-2">
         <Col xs={3} md={2} lg={2}>
           <div style={{ display: "flex" }}>
-            <img src={logo} alt="this logo" className="navbar-img"></img>
-            <a href="#home" className="font-color-light navbar-keep">
+          <Link to="/" className="font-color-light navbar-keep">
+          <img src={logo} alt="this logo" className="navbar-img"></img>
               Keep
-            </a>
+          </Link>
           </div>
         </Col>
 
         <Col xs={6} md={5} lg={6}>
           <InputGroup className="navbar-input">
-            <Button className="btn-search" onClick={()=>{console.log(search); dispatch(getNotesBySearch(search))}}>
+            <Button className="btn-search" onClick={()=>{searchPost(); }}>
               <AiOutlineSearch />
             </Button>
             <FormControl placeholder="Search" className="form-control-search" name="search" value={search} onChange={(e)=>{setSearch(e.target.value)}}/>
+            {search && 
+              <Button className="btn-search" onClick={()=>{clear(); }}>
+              Clear
+            </Button>}
+          
           </InputGroup>
         </Col>
 
@@ -80,7 +86,7 @@ export default function Navbarr({ listView, setListView, search,setSearch }) {
                 setListView((listView) => !listView);
               }}
             >
-              <BsGrid size="18" />
+              <BsGrid size="16" />
             </Button>
           )}
 
@@ -91,12 +97,9 @@ export default function Navbarr({ listView, setListView, search,setSearch }) {
                 setListView((listView) => !listView);
               }}
             >
-              <FaGripLines size="18" />
+              <FaGripLines size="16" />
             </Button>
           )}
-          <Button className="btn-navbar font-color-light">
-            <IoRefreshSharp size="18" />
-          </Button>
         </Col>
 
         <Col xs={2} md={3} lg={2}>
@@ -104,7 +107,7 @@ export default function Navbarr({ listView, setListView, search,setSearch }) {
             <div>
               {!user.result.imageUrl ? (
                 <Dropdown size="sm" align="end">
-                  <Dropdown.Toggle className="btn-navbar">
+                  <Dropdown.Toggle className="btn-navbar" style={{fontSize:"20px"}}>
                     {user?.result.name.charAt(0)}
                   </Dropdown.Toggle>
                   <Dropdown.Menu variant="dark">

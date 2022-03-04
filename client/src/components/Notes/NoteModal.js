@@ -1,12 +1,14 @@
 import React from "react";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Form,
   Button,
   Modal,
   Dropdown,
   Badge,
+  Tooltip,
+  OverlayTrigger
 } from "react-bootstrap";
 import { MdOutlineColorLens, MdLabelOutline } from "react-icons/md";
 import { BiImage, BiArchiveIn } from "react-icons/bi";
@@ -35,6 +37,31 @@ function NoteModal(props) {
   );
   const dispatch = useDispatch();
   const [label, setLabel] = useState("");
+
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {NoteData.archive ? "Unarchive" : "Archive"}
+    </Tooltip>
+  );
+
+  const renderTooltipBg = (props) => (
+    <Tooltip id="button-tooltip-bg" {...props}>
+      Background
+    </Tooltip>
+  );
+
+  const renderTooltipCol = (props) => (
+    <Tooltip id="button-tooltip-color" {...props}>
+      Color
+    </Tooltip>
+  );
+
+  const renderTooltipLab = (props) => (
+    <Tooltip id="button-tooltip-label" {...props}>
+      Label
+    </Tooltip>
+  );
+
 
   const user = JSON.parse(localStorage.getItem("profile"));
 
@@ -223,6 +250,11 @@ function NoteModal(props) {
               {/* <Button className="btn-navbar">
                     <AiOutlineBell />
                   </Button>                  */}
+              <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 300 }}
+                  overlay={renderTooltipCol}
+                >
               <Dropdown
                 onSelect={(e) =>
                   setNoteData({ ...NoteData, backgroundColor: e })
@@ -260,6 +292,13 @@ function NoteModal(props) {
                   })}
                 </Dropdown.Menu>
               </Dropdown>
+              </OverlayTrigger>
+
+              <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 300 }}
+                  overlay={renderTooltipBg}
+                >
               <Button className="btn-navbar" onClick={handleImage}>
                 <BiImage />
                 <input
@@ -269,6 +308,13 @@ function NoteModal(props) {
                   style={{ display: "none" }}
                 ></input>
               </Button>
+              </OverlayTrigger>
+
+              <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 300 }}
+                  overlay={renderTooltip}
+                >
               <Button
                 className="btn-navbar"
                 onClick={() => {
@@ -280,6 +326,13 @@ function NoteModal(props) {
               >
                 <BiArchiveIn />
               </Button>
+              </OverlayTrigger>
+             
+              <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 300 }}
+                  overlay={renderTooltipLab}
+                >
               <Dropdown>
                 <Dropdown.Toggle className="btn-navbar">
                   <MdLabelOutline />
@@ -350,6 +403,7 @@ function NoteModal(props) {
                     })}
                 </Dropdown.Menu>
               </Dropdown>
+              </OverlayTrigger>
               <div>
                 <Button
                   variant="outline-light"

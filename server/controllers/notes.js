@@ -18,7 +18,7 @@ export const getNotesBySearch = async (req, res) => {
 
     try {
         const title = new RegExp(searchQuery, "i");
-        const notes = await NoteMessage.find({ $or: [ { title } ]})
+        const notes = await NoteMessage.find({ $or: [ { title }, { message: title } ]} )
         
         res.json({data : notes})
 
@@ -66,5 +66,5 @@ export const deleteNote = async (req, res) => {
 
     await NoteMessage.findByIdAndRemove(id);
 
-    res.json({message:"Post Deleted Successfully"});
+    res.json({message:"Note Deleted Successfully"});
 }
